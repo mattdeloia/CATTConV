@@ -1,6 +1,3 @@
-CATTCon Results
-================
-
 ### Behavioral Trait Importance
 
 ##### Results of **importance ratings** of 8 personality categories for performance in cybersecurity roles.
