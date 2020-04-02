@@ -44,8 +44,8 @@ df_cert2<-df_cert %>% separate(Certifications, c("Certifications1", "Certificati
 df_hobby <-df %>% select(Hobbies) 
 df_hobby$Hobbies<- gsub("\\(", "", df_hobby$Hobbies)
 df_hobby$Hobbies<- gsub("\\)", "", df_hobby$Hobbies)
-df_hobby<-df_hobby %>% separate(Hobbies, c("Hobbies1", "Hobbies2", "Hobbies3", "Hobbies4"), sep=",") %>%
-     gather(Hobbies1:Hobbies4, key=Category, value=Hobbies) %>% select (-Category ) %>% 
+df_hobby2<-df_hobby %>% separate(Hobbies, c("Hobbies1", "Hobbies2", "Hobbies3", "Hobbies4", "Hobbies5", "Hobbies6", "Hobbies7"), sep=",") %>%
+     gather(Hobbies1:Hobbies7, key=Category, value=Hobbies) %>% select (-Category ) %>% 
      na.omit(df_hobby) %>% 
      group_by(Hobbies) %>% summarise(n=n()/n_Cyber$n)
 
@@ -96,19 +96,19 @@ df2 <- df %>%
 
 ### Demographic Information (Education, Certificaitons, Hobbies)
 
-##### Education Level.  Percentage reported by Field of Study of Cybersecuirty Professionals.
+##### Education:  Highest degree achieved by percentage of cybersecuirty professionals.
 
 ```{r, echo=FALSE}
-df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Field)) + 
+df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Education)) + 
   ylab("Percentage of Particpants") +
   geom_text(aes( x=Education, y=n, label = round(n, 2), ),  hjust = .5, vjust = -.1 , size=3.5, color="red") +
   xlab ("") +
-  scale_fill_manual(name="Field", values = c("lightgreen", "gray"))+
+  scale_fill_manual(name="Field", values = c("lightgray", "gray", "lightgreen", "green"))+
   theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
   facet_grid(.~Field)
 ```
 
-##### Cybersecurity Certifications  Percentage reported by Cybersecurity Professionals.
+##### Certifications: Certification(s) achieved by percentage of cybersecurity professionals.
 
 ```{r, echo=FALSE}
 df_cert2 %>% mutate(Certifications = reorder(Certifications, n, FUN=mean)) %>% ggplot() + geom_col(aes(x=Certifications, y=n), fill="lightgreen") + 
@@ -119,6 +119,13 @@ df_cert2 %>% mutate(Certifications = reorder(Certifications, n, FUN=mean)) %>% g
   #scale_fill_manual(name="Field", values = c("lightgreen", "gray"))+
   #theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
   #facet_grid(.~Field)
+```
+
+##### Hobbies: hobbies reported by cybersecurity professionals.
+
+```{r, echo=FALSE}
+df_hobby2 %>% select (Hobbies)  %>% kable (format = "markdown")
+
 ```
 
 
