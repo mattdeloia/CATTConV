@@ -1,3 +1,9 @@
+### Demographic Information (Education, Certificaitons, Hobbies)
+
+##### Education Level of cybersecurity professionals. Percentage reported by Field of Study.
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
 ### Behavioral Trait Importance
 
 ##### Results of **importance ratings** of 8 personality categories for performance in cybersecurity roles.
@@ -20,11 +26,11 @@
 
 ##### **Scale: 1 - Not Important, 7 - Very Important**
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ### Distribution of Respondent Raw Scores: check for normal distribution
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ### Personality Trait Raw Scores (8 Categories)
 
@@ -44,7 +50,7 @@
   - *Skepticism*: critically asssessing evidence before making a
     decision.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ### Personality Trait: Curiosity Category (5 Dimensions)
 
@@ -64,7 +70,7 @@
     experiences and ready to risk physical, social, and financial
     safety.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ### Personality Trait: Skepticism Category (6 Dimensions)
 
@@ -82,7 +88,7 @@
     on a matter until sufficient evidence to form a basis for a
     reasonable conclusion has been obtained.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ### Self-Efficacy reported by technical level (High, Medium, Low)
 
@@ -91,13 +97,13 @@
 
 ##### **Scale: 1 - low confidence in ability, 7 - very high confidence in ability**
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ### Correlation of Personality Dimensions
 
 ##### Green boxes are drawn around results of hierarchical clustering of these personality dimensions.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 #### References:
 ###### Adaptability and Conformity, International Personality Item Pool: A Scientific Collaboratory for the Development of Advanced Measures of Personality Traits and Other Individual Differences. http://ipip.ori.org/
