@@ -145,7 +145,7 @@ df1a %>%
 ### Distribution of Respondent Raw Scores: check for normal distribution
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2 %>% filter (Dimension !="SelfEfficacy") %>% ggplot() + geom_density(aes(x=Score), fill="lightgreen")+facet_wrap(Dimension~., ncol = 4)
+df2 %>% filter ( CyberPro=="Yes", Category != "SelfEfficacy") %>% ggplot() + geom_density(aes(x=Score), fill="lightgreen")+facet_wrap(Dimension~., ncol = 4)
 ```
 
 ### Personality Trait Raw Scores (8 Categories)
