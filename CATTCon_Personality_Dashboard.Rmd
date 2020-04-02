@@ -239,7 +239,7 @@ dfcluster <- df  %>% select(ID, SearchforKnowledge:Grit)
 
 dfcluster<-data.frame(dfcluster, row.names=1)
 
-corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=3, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
+corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=4, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
 ```
 
 #### References:
