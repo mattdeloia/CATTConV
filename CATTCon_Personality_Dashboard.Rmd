@@ -97,7 +97,7 @@ df2 <- df %>%
 ### Demographic Information (Education, Certificaitons, Hobbies)
 ##### Education Level of cybersecurity professionals.  Percentage reported  by Field of Study.
 
-```{r}
+```{r, echo=FALSE}
 df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Field)) + 
   ylab("Percentage of Particpants") +
   geom_text(aes( x=Education, y=n, label = round(n, 2), ),  hjust = .5, vjust = -.1 , size=3.5, color="red") +
