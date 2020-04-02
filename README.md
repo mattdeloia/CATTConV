@@ -1,6 +1,6 @@
-### Demographic Information (Education, Certifications, Hobbies)
+### Demographic Information (Education, Certificaitons, Hobbies)
 
-##### Education Level of cybersecurity professionals. Percentage reported by Field of Study.
+##### Education Level. Percentage reported by Field of Study of Cybersecuirty Professionals.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
@@ -30,11 +30,11 @@
 
 ##### **Scale: 1 - Not Important, 7 - Very Important**
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ### Distribution of Respondent Raw Scores: check for normal distribution
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ### Personality Trait Raw Scores (8 Categories)
 
@@ -54,7 +54,7 @@
   - *Skepticism*: critically asssessing evidence before making a
     decision.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ### Personality Trait: Curiosity Category (5 Dimensions)
 
@@ -74,7 +74,7 @@
     experiences and ready to risk physical, social, and financial
     safety.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ### Personality Trait: Skepticism Category (6 Dimensions)
 
@@ -92,7 +92,7 @@
     on a matter until sufficient evidence to form a basis for a
     reasonable conclusion has been obtained.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ### Self-Efficacy reported by technical level (High, Medium, Low)
 
@@ -101,18 +101,24 @@
 
 ##### **Scale: 1 - low confidence in ability, 7 - very high confidence in ability**
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ### Correlation of Personality Dimensions
 
 ##### Green boxes are drawn around results of hierarchical clustering of these personality dimensions.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 #### References:
-###### Adaptability and Conformity, International Personality Item Pool: A Scientific Collaboratory for the Development of Advanced Measures of Personality Traits and Other Individual Differences. http://ipip.ori.org/
+
+###### Adaptability and Conformity, International Personality Item Pool: A Scientific Collaboratory for the Development of Advanced Measures of Personality Traits and Other Individual Differences. <http://ipip.ori.org/>
+
 ###### Cacioppo, J. T., Petty, R. E., and Kao, C. F. (1984). The efficient assessment of need for cognition. *Journal of Personality Assessment*, 48, 306-307.
+
 ###### Duckworth, A. L. & Quinn, P. D. (2009). Development and validation of the Short Grit Scale (Grit-S). *Journal of Personality Assessment*, 91(2), 166-174.
+
 ###### Hurt, R. K. (2010, May). Development of a Scale to Measure Professional Skepticism. *Auditing: A Journal of Practice and Theory*, 29(1), 149-171.
+
 ###### Kashdan, T. B., Stiksma, M. C., Disabato, D. J., Mcknight, P. E.,, Bekier, J., Kaji, J., Lazarus, R. (2017, December). The Five-Dimension Curiosity Scale: Capturing the bandwidth of curisity and identifying four unique subgrups of curious people. *Journal for Research in Personality*, 73, 130-149.
-###### Kruglanski, A. W., Thompson, E. P., Higgins, E. T., Atash, M. N., Pierro, A., Shah, J. Y., Spiegel, S. (2000, Nov). To "do the right thing" or to "just do it": Locomotion and assessment as distinct self-regulatory imperatives. *Journal of Personality and Social Psychology*, 79(5), 793-815.
+
+###### Kruglanski, A. W., Thompson, E. P., Higgins, E. T., Atash, M. N., Pierro, A., Shah, J. Y., Spiegel, S. (2000, Nov). To “do the right thing” or to “just do it”: Locomotion and assessment as distinct self-regulatory imperatives. *Journal of Personality and Social Psychology*, 79(5), 793-815.
