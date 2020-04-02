@@ -4,6 +4,10 @@
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
+##### Cybersecurity Certifications Percentage reported by Cybersecurity Professionals.
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
 ### Behavioral Trait Importance
 
 ##### Results of **importance ratings** of 8 personality categories for performance in cybersecurity roles.
