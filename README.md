@@ -1,4 +1,4 @@
-### Demographic Information (Education, Certificaitons, Hobbies)
+### Demographic Information (Education, Certifications, Hobbies)
 
 ##### Education Level of cybersecurity professionals. Percentage reported by Field of Study.
 
