@@ -3,9 +3,13 @@ CATTCon Results
 
 ### Demographic Information (Education, Certificaitons, Hobbies)
 
-##### Education Level of cybersecurity professionals. Percentage reported by Field of Study.
+##### Education Level. Percentage reported by Field of Study of Cybersecuirty Professionals.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
+##### Cybersecurity Certifications Percentage reported by Cybersecurity Professionals.
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ### Behavioral Trait Importance
 
@@ -29,11 +33,11 @@ CATTCon Results
 
 ##### **Scale: 1 - Not Important, 7 - Very Important**
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ### Distribution of Respondent Raw Scores: check for normal distribution
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ### Personality Trait Raw Scores (8 Categories)
 
@@ -53,7 +57,7 @@ CATTCon Results
   - *Skepticism*: critically asssessing evidence before making a
     decision.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ### Personality Trait: Curiosity Category (5 Dimensions)
 
@@ -73,7 +77,7 @@ CATTCon Results
     experiences and ready to risk physical, social, and financial
     safety.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ### Personality Trait: Skepticism Category (6 Dimensions)
 
@@ -91,7 +95,7 @@ CATTCon Results
     on a matter until sufficient evidence to form a basis for a
     reasonable conclusion has been obtained.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ### Self-Efficacy reported by technical level (High, Medium, Low)
 
@@ -100,13 +104,13 @@ CATTCon Results
 
 ##### **Scale: 1 - low confidence in ability, 7 - very high confidence in ability**
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ### Correlation of Personality Dimensions
 
 ##### Green boxes are drawn around results of hierarchical clustering of these personality dimensions.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 #### References:
 

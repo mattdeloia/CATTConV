@@ -35,7 +35,7 @@ df_ed2<-df_ed %>% separate(Education, c("Education1", "Education2", "Education3"
 df_cert <-df %>% select(Certifications) 
 df_cert$Certifications<- gsub("\\(", "", df_cert$Certifications)
 df_cert$Certifications<- gsub("\\)", "", df_cert$Certifications)
-df_cert<-df_cert %>% separate(Certifications, c("Certifications1", "Certifications2", "Certifications3", "Certifications4"), sep=",") %>%
+df_cert2<-df_cert %>% separate(Certifications, c("Certifications1", "Certifications2", "Certifications3", "Certifications4"), sep=",") %>%
      gather(Certifications1:Certifications4, key=Category, value=Certifications) %>% select (-Category ) %>% 
      na.omit(df_cert) %>% 
      group_by(Certifications) %>% summarise(n=n()/n_Cyber$n)
@@ -95,7 +95,8 @@ df2 <- df %>%
 ```
 
 ### Demographic Information (Education, Certificaitons, Hobbies)
-##### Education Level of cybersecurity professionals.  Percentage reported  by Field of Study.
+
+##### Education Level.  Percentage reported by Field of Study of Cybersecuirty Professionals.
 
 ```{r, echo=FALSE}
 df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Field)) + 
@@ -106,6 +107,20 @@ df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Field)) +
   theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
   facet_grid(.~Field)
 ```
+
+##### Cybersecurity Certifications  Percentage reported by Cybersecurity Professionals.
+
+```{r, echo=FALSE}
+df_cert2 %>% mutate(Certifications = reorder(Certifications, n, FUN=mean)) %>% ggplot() + geom_col(aes(x=Certifications, y=n), fill="lightgreen") + 
+  ylab("Percentage of Cybersecurity Professionals") +
+  geom_text(aes( x=Certifications, y=n, label = round(n, 2), ),  hjust = .5, vjust = -.1 , size=3.5, color="red") +
+  xlab ("") +
+  coord_flip()
+  #scale_fill_manual(name="Field", values = c("lightgreen", "gray"))+
+  #theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
+  #facet_grid(.~Field)
+```
+
 
 ### Behavioral Trait Importance
 ##### Results of **importance ratings** of 8 personality categories for performance in cybersecurity roles.
