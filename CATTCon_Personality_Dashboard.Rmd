@@ -24,10 +24,12 @@ df %>% filter(CyberPro=="Yes") %>% ggplot() + geom_density(aes(x=YearsExperience
 df_ed <-df %>% select(Education) 
 df_ed$Education<- gsub("\\(", "", df_ed$Education)
 df_ed$Education<- gsub("\\)", "", df_ed$Education)
-df_ed<-df_ed %>% separate(Education, c("Education1", "Education2", "Education3", "Education4"), sep=",") %>%
+df_ed2<-df_ed %>% separate(Education, c("Education1", "Education2", "Education3", "Education4"), sep=",") %>%
      gather(Education1:Education4, key=Category, value=Education) %>% select (-Category ) %>% 
+     separate(col = `Education`, into=c("Education", "Field"), sep = "_", remove = "FALSE") %>% 
      na.omit(df_ed) %>% 
-     group_by(Education) %>% summarise(n=n()/n_Cyber$n)
+     group_by(Education, Field) %>% summarise(n=n()/n_Cyber$n)
+
 
 #Certifications
 df_cert <-df %>% select(Certifications) 
@@ -90,6 +92,19 @@ df2 <- df %>%
 #df2 %>% ggplot(aes(sample=Score), color="lightgreen") +  # Create QQplot with ggplot2 package
  # stat_qq(col="green") +
   #stat_qq_line(col = "red") +facet_wrap(Dimension~.)
+```
+
+### Demographic Information (Education, Certificaitons, Hobbies)
+##### Education Level of cybersecurity professionals.  Percentage reported  by Field of Study.
+
+```{r}
+df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Field)) + 
+  ylab("Percentage of Particpants") +
+  geom_text(aes( x=Education, y=n, label = round(n, 2), ),  hjust = .5, vjust = -.1 , size=3.5, color="red") +
+  xlab ("") +
+  scale_fill_manual(name="Field", values = c("lightgreen", "gray"))+
+  theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
+  facet_grid(.~Field)
 ```
 
 ### Behavioral Trait Importance
