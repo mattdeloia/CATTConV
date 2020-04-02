@@ -4,6 +4,8 @@
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
+### Distribution of Respondent Raw Scores: check for normal distribution (TBP)
+
 ### Behavioral Trait Importance
 
 ##### Results of **importance ratings** of 8 personality categories for performance in cybersecurity roles.
@@ -28,9 +30,7 @@
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-### Distribution of Respondent Raw Scores: check for normal distribution
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ### Personality Trait Raw Scores (8 Categories)
 
