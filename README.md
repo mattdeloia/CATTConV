@@ -1,3 +1,9 @@
+### Demographic Information (Education, Certificaitons, Hobbies)
+
+##### Education Level of cybersecurity professionals. Percentage reported by Field of Study.
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
 ### Behavioral Trait Importance
 
 ##### Results of **importance ratings** of 8 personality categories for performance in cybersecurity roles.
