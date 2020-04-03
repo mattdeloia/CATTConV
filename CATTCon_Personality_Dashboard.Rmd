@@ -1,6 +1,7 @@
 ---
 title: "CATTCon Results"
 output: github_document
+always_allow_html: true
 ---
 
 ```{r setup, include=FALSE}
@@ -11,6 +12,12 @@ library(tidyverse)
 library(knitr)
 library(ggcorrplot)
 library(corrplot)
+library(stringr)
+library(tm)
+library(qdap)
+library(wordcloud)
+library(wordcloud2)
+library(RColorBrewer)
 
 df<- read_excel("CATTConSurveyResults.xls")
 
@@ -99,13 +106,14 @@ df2 <- df %>%
 ##### Education:  Highest degree achieved by percentage of cybersecuirty professionals.
 
 ```{r, echo=FALSE}
-df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Education)) + 
+df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Field), position="dodge")  + 
   ylab("Percentage of Particpants") +
-  geom_text(aes( x=Education, y=n, label = round(n, 2), ),  hjust = .5, vjust = -.1 , size=3.5, color="red") +
+  geom_text(aes( x=Education, y=n, label = round(n, 2), ),color="black", vjust= -.1, hjust = .1, size=3.5) +
   xlab ("") +
-  scale_fill_manual(name="Field", values = c("lightgray", "gray", "lightgreen", "green"))+
+  scale_fill_manual(name="Field", values = c("lightgreen", "gray")) +
   theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
-  facet_grid(.~Field)
+     facet_grid(.~Field)
+  
 ```
 
 ##### Certifications: Certification(s) achieved by percentage of cybersecurity professionals.
@@ -123,8 +131,26 @@ df_cert2 %>% mutate(Certifications = reorder(Certifications, n, FUN=mean)) %>% g
 
 ##### Hobbies: hobbies reported by cybersecurity professionals.
 
-```{r, echo=FALSE}
-df_hobby2 %>% select (Hobbies)  %>% kable (format = "markdown")
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+#Create a vector containing only the text
+text <- df_hobby2$Hobbies# Create a corpus  
+
+docs <- Corpus(VectorSource(text))
+docs <- docs %>%
+  #tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, stopwords("english"))
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm) 
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df_text <- data.frame(word = names(words),freq=words)%>%filter(freq>0)
+
+wordcloud(words = df_text$word, freq = df_text$freq, min.freq = 0,
+          max.words=200, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Greens"))
+#df_hobby2 %>% select (Hobbies)  %>% kable (format = "markdown")
 
 ```
 
