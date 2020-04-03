@@ -101,7 +101,7 @@ df2 <- df %>%
   #stat_qq_line(col = "red") +facet_wrap(Dimension~.)
 ```
 
-### Demographic Information (Education, Certificaitons, Hobbies)
+### Demographic Information (Education, Certifications, Hobbies)
 
 ##### Education:  Highest degree achieved by percentage of cybersecuirty professionals.
 
@@ -197,7 +197,8 @@ df2 %>% filter ( CyberPro=="Yes", Category != "SelfEfficacy") %>% ggplot() + geo
 ```
 
 ### Personality Trait Raw Scores (8 Categories)
-##### Median values are in **red text**.
+##### Cybersecurity professionals are displayed in the **green* boxplots.
+
 * *Adaptability*: ability to adjust to new conditions.
 * *Assessment*: focus on self-evaluation and "doing the right thing."
 * *Curiosity*: seek out situations with potential for new information and experiences.
@@ -208,16 +209,19 @@ df2 %>% filter ( CyberPro=="Yes", Category != "SelfEfficacy") %>% ggplot() + geo
 * *Skepticism*: critically asssessing evidence before making a decision.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2 %>% filter (CyberPro=="Yes", Category != "SelfEfficacy")  %>% 
+df2 %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
      ungroup() %>% 
      mutate(Category=reorder(Category, Score, FUN=median)) %>% 
-     ggplot(aes(x=Category, y=Score)) +
+     ggplot(aes(x=Category, y=Score, fill=CyberPro)) +
      geom_boxplot() +
      coord_flip() + ylab("Raw Score") + 
      #geom_jitter(aes(color=TechnicalLevel)) +
      theme(legend.title= element_text(color="black", size=10), legend.position = "top") +
      xlab("") +
-     stat_summary(aes(x=Category, y=Score, label=round(..y..,2)), fun.y = "median", geom="text", size=3, color="red", hjust = -.2)
+    scale_fill_manual(values = c("lightgreen", "lightgreen")) +
+  stat_summary(aes(x=Category, y=Score, label=round(..y..,2)), fun.y = "median", geom="text", size=3, color="red", hjust = -.2) +
+    theme(legend.title=element_text(color="black", size=10), legend.position="blank")
+   
 #+facet_grid(.~TechnicalLevel)
 ```
 
@@ -259,7 +263,7 @@ df2 %>% filter(CyberPro=="Yes", Category=="Skepticism") %>%
      xlab("")
 ```
 
-### Self-Efficacy reported by technical level (High, Medium, Low)
+### Self-efficacy reported by cybersecurity technical level (High, Medium, Low)
 * *Self-Efficacy*:  belief in one's own ability to deal with a prospective situation in cybersecurity roles.
 
 ##### **Scale: 1 - low confidence in ability, 7 - very high confidence in ability**

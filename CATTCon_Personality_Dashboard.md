@@ -1,7 +1,7 @@
 CATTCon Results
 ================
 
-### Demographic Information (Education, Certificaitons, Hobbies)
+### Demographic Information (Education, Certifications, Hobbies)
 
 ##### Education: Highest degree achieved by percentage of cybersecuirty professionals.
 
@@ -45,7 +45,7 @@ CATTCon Results
 
 ### Personality Trait Raw Scores (8 Categories)
 
-##### Median values are in **red text**.
+##### Cybersecurity professionals are displayed in the \*\*green\* boxplots.
 
   - *Adaptability*: ability to adjust to new conditions.
   - *Assessment*: focus on self-evaluation and “doing the right thing.”
@@ -101,7 +101,7 @@ CATTCon Results
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-### Self-Efficacy reported by technical level (High, Medium, Low)
+### Self-efficacy reported by cybersecurity technical level (High, Medium, Low)
 
   - *Self-Efficacy*: belief in one’s own ability to deal with a
     prospective situation in cybersecurity roles.
