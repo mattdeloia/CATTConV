@@ -10,46 +10,7 @@
 
 ##### Hobbies: hobbies reported by cybersecurity professionals.
 
-| Hobbies                                                                           |
-| :-------------------------------------------------------------------------------- |
-| etc                                                                               |
-| ML                                                                                |
-| Red Teaming                                                                       |
-| Security                                                                          |
-| AWS Certs Solutions Arch                                                          |
-| Beekeeping                                                                        |
-| Conferences                                                                       |
-| Crossword puzzles                                                                 |
-| CTFs                                                                              |
-| Cyber Patriot Mentoring                                                           |
-| Discover/tap into expertise of others                                             |
-| Electronics                                                                       |
-| Engineer Mentor programs University Student Engineers                             |
-| Game Play                                                                         |
-| Gaming                                                                            |
-| Ham Radio                                                                         |
-| Identify/repair from the root cause -pro-active approach to known versus reactive |
-| Increase knowledge for current/changing needs                                     |
-| Machine Learning / AI Tensorflow                                                  |
-| Marine Corps Cyber Auxiliary                                                      |
-| Perform Compliance reviews to make others succeed                                 |
-| Presenting Hackerspaces                                                           |
-| Private Pilot                                                                     |
-| Programming                                                                       |
-| Pursuing Master’s in SE                                                           |
-| Quantum Computing MIT                                                             |
-| Red Team participation                                                            |
-| Running                                                                           |
-| SCUBA                                                                             |
-| shooting                                                                          |
-| Software Development/coding                                                       |
-| Sports statistics                                                                 |
-| Training/teaching/mentoring others                                                |
-| Travel                                                                            |
-| Video Game Hacking                                                                |
-| Volunteering for Events Hackathongs                                               |
-| Website development                                                               |
-| Woodworking                                                                       |
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ### Behavioral Trait Importance
 
