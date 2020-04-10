@@ -1,16 +1,25 @@
+NG CATTConV Survey Results
+================
+
+### 59 cybersecurity professionals and 12 professionals filling non-cybersecurity roles participated in this data collection.
+
 ### Demographic Information (Education, Certifications, Hobbies)
 
 ##### Education: Highest degree achieved by percentage of cybersecuirty professionals.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-##### Certifications: Certification(s) achieved by percentage of cybersecurity professionals.
+##### Years of Experience of cybersecuirty professionals.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-##### Hobbies: hobbies reported by cybersecurity professionals.
+##### Certifications reported by cybersecurity professionals.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+##### Hobbies reported by cybersecurity professionals.
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ### Behavioral Trait Importance
 
@@ -34,67 +43,59 @@
 
 ##### **Scale: 1 - Not Important, 7 - Very Important**
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
-
-### Distribution of Respondent Raw Scores: check for normal distribution
-
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-### Personality Trait Raw Scores (8 Categories)
-
-##### Cybersecurity professionals are displayed in the \*\*green\* boxplots.
-
-  - *Adaptability*: ability to adjust to new conditions.
-  - *Assessment*: focus on self-evaluation and “doing the right thing.”
-  - *Curiosity*: seek out situations with potential for new information
-    and experiences.
-  - *Grit*: perseverance and passion for long-term goals.
-  - *Locomotion*: decisiveness, task orentiation, intrinsic motivation
-    to get the job done.
-  - *Need for Cognition*: engage and enjoy effortful cognitive
-    endeavors.
-  - *Non-Conformity*: refusal to conform to prevailing rules or
-    practices.
-  - *Skepticism*: critically asssessing evidence before making a
-    decision.
+### Distribution of Respondent Raw Scores
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-### Personality Trait: Curiosity Category (5 Dimensions)
+### Personality Trait Raw Scores (17 Dimensions)
 
-  - *DeprivationSensitivity*: Seeking information to escape the tension
-    of not knowing something. Intellectually engaged to think about
-    abstract or complex ideas and solve problems.
-  - *JoyousExploration*: Preference for new information and experiences,
-    and the valuing of self-expansion over security.
-  - *SocialCuriosity*: Desire to know what other people are thinking and
-    doing through overt means (observing and probing questions) or
-    covert means (listening into conversations or gathering second-hand
-    information).  
-  - *StressTolerance*: Ability to cope win the anxiety inherent in
-    confronting the new, unexpected, complex, mysterious, and obscure
-    events.
-  - *ThrillSeeking*: On the hunt for varied, novel, complex, and intense
-    experiences and ready to risk physical, social, and financial
-    safety.
+###### Cybersecurity professionals are displayed in the **green** boxplots. Boxplots graphically depict numerical data through their quartiles. Boxplots are non-parametric: they display variation in samples of a statistical population without making any assumptions of the underlying statistical distribution. The median value is labeled in **red** text. Outliers are plotted as black dots.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-### Personality Trait: Skepticism Category (6 Dimensions)
+##### The definition of each dimension, in order of their scores among cybersecurity professionals, is as follows:
 
-  - *QuestioningMind*: Attitude to look below the surface and see if the
-    numbers, situation, factors or people look out of place.
+  - *SearchforKnowledge*: Ability to ask questions beyond the obvious
+    answer.
+  - *StressTolerance*: Ability to cope win the anxiety inherent in
+    confronting the new, unexpected, complex, mysterious, and obscure
+    events.
+  - *JoyousExploration*: Preference for new information and experiences,
+    and the valuing of self-expansion over security.
   - *SelfConfidence*: Someone who would be unafraid to pursue a
     resolution when he/she uncovers a questionable activity.
   - *InterpersonalUnderstanding*: Not placing inappropriate degree of
     trust in people, processes, controls and data.
-  - *SearchforKnowledge*: Ability to ask questions beyond the obvious
-    answer.
-  - *SelfDetermining*: Taking a step back from an issue, position, or
-    posture and asking “does this make sense to me?”
+  - *Locomotion*: decisiveness, task orentiation, intrinsic motivation
+    to get the job done.
   - *SuspensionofJudgement*: Characteristic of withholding a conclusion
     on a matter until sufficient evidence to form a basis for a
-    reasonable conclusion has been obtained.
+    reasonable conclusion has been obtained
+  - *DeprivationSensitivity*: Seeking information to escape the tension
+    of not knowing something. Intellectually engaged to think about
+    abstract or complex ideas and solve problems.
+  - *Need for Cognition*: engage and enjoy effortful cognitive
+    endeavors.
+  - *SelfDetermining*: Taking a step back from an issue, position, or
+    posture and asking “does this make sense to me?”
+  - *Grit*: perseverance and passion for long-term goals.
+  - *SocialCuriosity*: Desire to know what other people are thinking and
+    doing through overt means (observing and probing questions) or
+    covert means (listening into conversations or gathering second-hand
+    information).
+  - *QuestioningMind*: Attitude to look below the surface and see if the
+    numbers, situation, factors or people look out of place.
+  - *Adaptability*: ability to adjust to new conditions.
+  - *Assessment*: focus on self-evaluation and “doing the right thing.”
+  - *ThrillSeeking*: On the hunt for varied, novel, complex, and intense
+    experiences and ready to risk physical, social, and financial
+    safety.
+  - *Non-Conformity*: refusal to conform to prevailing rules or
+    practices.
+
+### Personality Trait Raw Scores by self-reported Technical Level
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
@@ -103,7 +104,7 @@
   - *Self-Efficacy*: belief in one’s own ability to deal with a
     prospective situation in cybersecurity roles.
 
-##### **Scale: 1 - low confidence in ability, 7 - very high confidence in ability**
+##### **Scale: 1 - low confidence in ability, 7 - very high confidence in ability/knowledge**
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
@@ -112,6 +113,10 @@
 ##### Green boxes are drawn around results of hierarchical clustering of these personality dimensions.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+### Army Tier1 Comparison: Personality Trait Raw Scores by self-reported Tier1 category
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 #### References:
 
