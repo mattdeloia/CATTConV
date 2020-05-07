@@ -145,7 +145,7 @@ dfcluster2 <- dplyr::rename(dfcluster2, cluster = `myclusters$cluster`)
 
 ### Demographic Information of Cyberseucrity Particpants (Education, Certifications, Hobbies)
 
-##### Education:  Highest degree achieved by percentage of Northrop Grumman Cybersecuirty Professionals.  Of the `r CyberPro$n` cybersecurity professionals, `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or related fields. 
+##### Education:  Highest degree achieved by percentage of Northrop Grumman Cybersecuirty Professionals.  Of the `r n_CyberPro$n` cybersecurity professionals, `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or related fields. 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 df_ed2$Education <- factor(df_ed2$Education, levels = c ("Secondary", "Associates", "Bachelors", "Masters", "PhD"))
@@ -330,20 +330,22 @@ dfcluster2a <- dfcluster2 %>% gather(SearchforKnowledge:Grit, key=Category, valu
 dfcluster2a$cluster<-as.factor(dfcluster2a$cluster)
 dfcluster3<-dfcluster2a %>% group_by(Category, cluster) %>% summarise(Score=mean(Score))
 dfcluster3$cluster<- paste("Cluster", dfcluster3$cluster) 
-df_sd <- dfcluster3 %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(sd=if_else(sd>.09, "High", "Low"))
+df_sd <- dfcluster3 %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(cluster_sd=if_else(sd>.09, "High", "Low"))
 dfcluster3 <- dfcluster3 %>% left_join(df_sd)
-myclusters$cluster
-myclusters$centers
-myclusters$size
-fviz_cluster(myclusters, data = dfcluster)
+dfcluster3$cluster_sd <- factor(dfcluster3$cluster_sd)
+#myclusters$cluster
+#myclusters$centers
+#myclusters$size
+#fviz_cluster(myclusters, data = dfcluster)
 
 dfcluster3 %>% ungroup() %>% 
      mutate(Category = fct_reorder(Category, Score, .fun=max)) %>% 
      ggplot(aes (x=Category, y=Score, group=cluster)) + 
-     geom_point(aes(shape=cluster, color=sd),size=3) +
+     geom_point(aes(color=cluster), size=2) +
      geom_line(aes(linetype=cluster)) +
-     scale_linetype_manual(values = c("blank", "dashed", "blank")) +
-     scale_color_manual(values = c("green", "darkgray", "green")) +
+     scale_linetype_manual(values = c("blank", "dashed", "blank"))+
+     scale_size_manual(values=c("3", "3")) +
+     scale_color_manual(values = c("green", "darkgray", "blue")) +
      coord_flip() + 
      #facet_grid(.~cluster)  +
      theme(legend.title= element_text(color="blue", size=10), legend.position = "top") + xlab("") +ylim(0.4,1)
@@ -355,27 +357,6 @@ dfcluster3 %>% ungroup() %>%
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
-```
-
-
-
-
-### Army Tier1 Comparison: Personality Trait Raw Scores by self-reported Tier1 category
-
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2z <- df2 %>% filter(CyberPro=="Yes") %>%  separate(Tier1Comparison, "Tier1Comparison", sep="-")
-#df2b$Tier1Comparison <- factor(df2b$Tier1Comparison, levels=c("Capabilities Developer", "Exploitation Analyst", "NA"))
-df2z %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
-     ungroup() %>% mutate(Dimension=reorder(Dimension, Score, FUN=median)) %>% 
-     group_by(Dimension, Tier1Comparison) %>% summarise(Score=mean(Score)) %>% 
-      ggplot(aes(x=Dimension, y=Score, color=Tier1Comparison, group=Tier1Comparison)) +
-     geom_point(size=2) +
-     geom_line(aes(linetype=Tier1Comparison)) +
-     coord_flip() + ylab("Raw Score") + 
-      xlab("") +
-     scale_color_manual(values = c("green", "red", "darkgray")) +
-     scale_linetype_manual(values=c("blank", "blank", "dashed")) +
-     theme(legend.title=element_text(color="black", size=10), legend.position="top")
 ```
 
 #### References:
