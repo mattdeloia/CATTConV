@@ -1,15 +1,15 @@
 NG CATTConV Survey Results
 ================
 
-### 59 cybersecurity professionals and 12 professionals filling non-cybersecurity roles participated in this data collection.
+### 61 cybersecurity professionals and 14 professionals filling non-cybersecurity roles participated in this data collection.
 
 ### Demographic Information (Education, Certifications, Hobbies)
 
-##### Education: Highest degree achieved by percentage of cybersecuirty professionals.
+##### Education: Highest degree achieved by percentage of cybersecuirty professionals. Of the 61 cybersecurity professionals, 77 percent have degrees in Computer Science or related fields.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-##### Years of Experience of cybersecuirty professionals.
+##### Years of Experience of cybersecuirty professionals. The average experience reported was 11 years.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 

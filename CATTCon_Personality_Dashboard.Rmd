@@ -1,5 +1,5 @@
 ---
-title: "NG CATTConV Survey Results"
+title: "Northrop Grumman CATTConV Survey Results"
 output: github_document
 always_allow_html: true
 ---
@@ -18,53 +18,13 @@ library(qdap)
 library(wordcloud)
 library(wordcloud2)
 library(RColorBrewer)
+library(data.table)
 
 df<- read_excel("CATTConSurveyResults.xls")
-
-######Respondant Background
-n_Cyber <- df %>% filter (CyberPro=="Yes")  %>% summarise(n=n())
-CyberPro <- df %>% count(CyberPro) %>%  filter(CyberPro=="Yes")
-Not_CyberPro <- df %>% count(CyberPro) %>% filter (CyberPro=="No")
-
-#Technical Level and Years of Experience
-df %>% filter(CyberPro=="Yes") %>% ggplot() + geom_density(aes(x=YearsExperience, fill=TechnicalLevel), alpha=0.5)
-
-#Education
-df_ed <-df %>% select(Education) 
-df_ed$Education<- gsub("\\(", "", df_ed$Education)
-df_ed$Education<- gsub("\\)", "", df_ed$Education)
-df_ed2<-df_ed %>% separate(Education, c("Education1", "Education2", "Education3", "Education4"), sep=",") %>%
-     gather(Education1:Education4, key=Category, value=Education) %>% select (-Category ) %>% 
-     separate(col = `Education`, into=c("Education", "Field"), sep = "_", remove = "FALSE") %>% 
-     na.omit(df_ed) %>% 
-     group_by(Education, Field) %>% summarise(n=n()/n_Cyber$n)
-
-
-#Certifications
-df_cert <-df %>% select(Certifications) 
-df_cert$Certifications<- gsub("\\(", "", df_cert$Certifications)
-df_cert$Certifications<- gsub("\\)", "", df_cert$Certifications)
-df_cert2<-df_cert %>% separate(Certifications, c("Certifications1", "Certifications2", "Certifications3", "Certifications4"), sep=",") %>%
-     gather(Certifications1:Certifications4, key=Category, value=Certifications) %>% select (-Category ) %>% 
-     na.omit(df_cert) %>% 
-     group_by(Certifications) %>% summarise(n=n()/n_Cyber$n)
-
-#Hobbies
-df_hobby <-df %>% select(Hobbies) 
-df_hobby$Hobbies<- gsub("\\(", "", df_hobby$Hobbies)
-df_hobby$Hobbies<- gsub("\\)", "", df_hobby$Hobbies)
-df_hobby2<-df_hobby %>% separate(Hobbies, c("Hobbies1", "Hobbies2", "Hobbies3", "Hobbies4", "Hobbies5", "Hobbies6", "Hobbies7"), sep=",") %>%
-     gather(Hobbies1:Hobbies7, key=Category, value=Hobbies) %>% select (-Category ) %>% 
-     na.omit(df_hobby) %>% 
-     group_by(Hobbies) %>% summarise(n=n()/n_Cyber$n)
 
 #Add id to each row
 df<-df %>% drop_na(CyberPro)
 df<- df %>% mutate("ID"=rownames(df))
-df$ID <- as.character(df$ID)
-
-idlist<- df %>% distinct(Email) %>% drop_na(Email)
-id <- "frank@gmail.com"
 
 #Reverse Scores for select columnn
 columnsToReverse <-  c('Skepticism13', 'Skepticism14', 'Skepticism15', 'Skepticism16','Skepticism17', 'Skepticism21', 'Skepticism22', 'Skepticism24', 'Curiosity11','Curiosity12','Curiosity13','Curiosity14', 'Curiosity15', 'NeedCognition3','NeedCognition4', 'NeedCognition5', 'NeedCognition7', 'NeedCognition9', 'NeedCognition12', 'NeedCognition16', 'NeedCognition17', 'SelfRegulation6', 'SelfRegulation9', 'SelfRegulation13', 'SelfRegulation17', 'SelfRegulation23', 'NonConformity2', 'NonConformity4', 'NonConformity5', 'NonConformity7', 'NonConformity9', 'Adaptability2', 'Adaptability5', 'Adaptability6','Adaptability7','Adaptability8', 'Grit1', 'Grit3', 'Grit5', 'Grit6')
@@ -72,8 +32,9 @@ columnsToReverse <-  c('Skepticism13', 'Skepticism14', 'Skepticism15', 'Skeptici
 df[,columnsToReverse] <- 7-df[, columnsToReverse]
 
 #Raw Scoring
-df1 <- df %>% group_by(ID) %>%  
-     mutate("SearchforKnowledge" = (sum(Skepticism1,Skepticism2,Skepticism3,Skepticism4,Skepticism5,Skepticism6) / 36) ,      "SuspensionofJudgement" = (sum(Skepticism7, Skepticism8,Skepticism9,Skepticism10,Skepticism11)/ 30), 
+dfa <- df %>% group_by(ID) %>%  
+     mutate("SearchforKnowledge" = (sum(Skepticism1,Skepticism2,Skepticism3,Skepticism4,Skepticism5,Skepticism6) / 36) ,      
+      "SuspensionofJudgement" = (sum(Skepticism7, Skepticism8,Skepticism9,Skepticism10,Skepticism11)/ 30), 
      "SelfDetermining" = (sum(Skepticism12,Skepticism13,Skepticism14,Skepticism15,Skepticism16,Skepticism17) / 36) , 
      "InterpersonalUnderstanding" = (sum(Skepticism18, Skepticism19,Skepticism20,Skepticism21,Skepticism22) / 30) , 
      "SelfConfidence" = (sum(Skepticism23, Skepticism24,Skepticism25,Skepticism26,Skepticism27) / 30) , 
@@ -89,239 +50,322 @@ df1 <- df %>% group_by(ID) %>%
      "NonConformity"= (sum(NonConformity1,NonConformity2,NonConformity3,NonConformity4,NonConformity5,NonConformity6,NonConformity7,NonConformity8,NonConformity9,NonConformity10) / 60) , 
      "Adaptability"= (sum (Adaptability1,Adaptability2,Adaptability3,Adaptability4,Adaptability5,Adaptability6,Adaptability7,Adaptability8) / 56) ,
      "Grit" = (sum (Grit1,Grit2,Grit3,Grit4,Grit5,Grit6,Grit7,Grit8)/ 48),
-     "SelfEfficacy" = (sum (SelfEfficacy1, SelfEfficacy2)/ 2 )) %>%
-          select (ID, CyberPro:OtherTraits, SearchforKnowledge:SelfEfficacy, Email) 
+     "SelfEfficacy" = (sum (SelfEfficacy1, SelfEfficacy2)/ 14 )) %>%
+          select (ID, CyberPro:OtherTraits, SearchforKnowledge:SelfEfficacy) 
+
+#Scoring and development of T Scores based on published norms
+dfb <- df %>% group_by(ID) %>%  
+     mutate("Skepticism" = (50+10*((sum (Skepticism1,Skepticism2,Skepticism3,Skepticism4,Skepticism5,Skepticism6,Skepticism7, Skepticism8,Skepticism9,Skepticism10,Skepticism11,Skepticism12,Skepticism13,Skepticism14,Skepticism15,Skepticism16,Skepticism17,Skepticism18, Skepticism19,Skepticism20,Skepticism21,Skepticism22,Skepticism23,Skepticism24,Skepticism25,Skepticism26,Skepticism27,Skepticism28, Skepticism29, Skepticism30)-(138.6*6/6))/12.6)), 
+     "JoyousExploration" = (50+10*((sum (Curiosity1,Curiosity2,Curiosity3,Curiosity4,Curiosity5) / 5)-(5.25*6/7))/(1.09*6/7)) , 
+     "DeprivationSensitivity" = (50+10*((sum (Curiosity6,Curiosity7,Curiosity8,Curiosity9,Curiosity10) / 5) -(4.90*6/7))/(1.14*6/7)), 
+     "StressTolerance" = (50+10*((sum (Curiosity11,Curiosity12,Curiosity13,Curiosity14,Curiosity15) / 5) -(4.42*6/7))/(1.36*6/7)), 
+     "SocialCuriosity" = (50+10*((sum (Curiosity16,Curiosity17,Curiosity18,Curiosity19,Curiosity20) / 5)-(4.42*6/7))/(1.35*6/7)) , 
+     "ThrillSeeking" = (50+10*((sum (Curiosity21,Curiosity22,Curiosity23,Curiosity24,Curiosity25) / 5)-(3.88*6/7))/(1.32*6/7)) , 
+     "NeedforCognition" = (50+10*((sum(NeedCognition1,NeedCognition2,NeedCognition3,NeedCognition4,NeedCognition5,NeedCognition6,NeedCognition7,NeedCognition8,NeedCognition9,NeedCognition10,NeedCognition11,NeedCognition12,NeedCognition13,NeedCognition14,NeedCognition15,NeedCognition16,NeedCognition17,NeedCognition18) / 18)-(3.64*6/5))/(.695*6/7)), 
+     "Locomotion" = (50+10*((sum(SelfRegulation1,SelfRegulation2,SelfRegulation3,SelfRegulation4,SelfRegulation5,SelfRegulation6,SelfRegulation7,SelfRegulation8,SelfRegulation9,SelfRegulation10,SelfRegulation11, SelfRegulation12) / 12 )-(4.14*6/6))/.69) , 
+     "Assessment" = (50+10*((sum(`SelfRegulation13`,SelfRegulation14,SelfRegulation15,SelfRegulation16,SelfRegulation17,SelfRegulation18,SelfRegulation19,SelfRegulation20,SelfRegulation21,SelfRegulation22,SelfRegulation23,SelfRegulation24) / 12)-(3.92*6/6))/.75),      "NonConformity"= (50+10*((sum(NonConformity1,NonConformity2,NonConformity3,NonConformity4,NonConformity5,NonConformity6,NonConformity7,NonConformity8,NonConformity9,NonConformity10) / 10)-(2.51*6/5))/(.470*6/5)) , 
+     "Adaptability"= (50+10*((sum (Adaptability1,Adaptability2,Adaptability3,Adaptability4,Adaptability5,Adaptability6,Adaptability7,Adaptability8) / 8)-(3.60*6/5))/(.539*6/5)),
+     "Grit" = (50+10*((sum (Grit1,Grit2,Grit3,Grit4,Grit5,Grit6,Grit7,Grit8)/ 8)-(3.65*6/5))/(.73*6/5))  ) %>%
+          select (ID, CyberPro:OtherTraits, Skepticism:Grit) 
 
 #Summary DataFrame
-df2 <- df1 %>% 
+df2a <- dfa %>% 
      gather(SearchforKnowledge:SelfEfficacy, key=Dimension, value=Score) %>% 
-     mutate(Category=if_else(Dimension %in% c("SearchforKnowledge", "SuspensionofJudgement", "SelfDetermining", "InterpersonalUnderstanding", "SelfConfidence", "QuestioningMind"), "Skepticism", if_else(Dimension %in% c("JoyousExploration", "DeprivationSensitivity", "StressTolerance", "SocialCuriosity", "ThrillSeeking"), "Curiosity", if_else(Dimension=="NeedforCognition", "NeedforCognition", if_else(Dimension == "Locomotion", "Locomotion", if_else (Dimension=="Assessment", "Assessment", if_else(Dimension == "Adaptability", "Adaptability", if_else(Dimension == "NonConformity", "NonConformity", if_else(Dimension=="Grit", "Grit", "SelfEfficacy" )))))))))
+     mutate(Category=if_else(Dimension %in% c("SearchforKnowledge", "SuspensionofJudgement", "SelfDetermining", "InterpersonalUnderstanding", "SelfConfidence", "QuestioningMind"), "Skepticism",
+          if_else(Dimension %in%  c("JoyousExploration", "DeprivationSensitivity", "StressTolerance", "SocialCuriosity", "ThrillSeeking"), "Curiosity", 
+          if_else(Dimension=="NeedforCognition", "NeedforCognition",
+          if_else(Dimension == "Locomotion", "Locomotion",
+          if_else (Dimension=="Assessment", "Assessment",
+          if_else(Dimension == "Adaptability", "Adaptability", if_else(Dimension == "NonConformity", "NonConformity", if_else(Dimension=="Grit", "Grit", "SelfEfficacy" )))))))))
+
+df2b <- dfb %>% 
+     gather(Skepticism:Grit, key=Dimension, value=Score) %>% 
+     mutate(Category=if_else(Dimension=="Skepticism", "Skepticism",
+          if_else(Dimension %in%  c("JoyousExploration", "DeprivationSensitivity", "StressTolerance", "SocialCuriosity", "ThrillSeeking"), "Curiosity", 
+          if_else(Dimension=="NeedforCognition", "NeedforCognition",
+          if_else(Dimension == "Locomotion", "Locomotion",
+          if_else (Dimension=="Assessment", "Assessment",
+          if_else(Dimension == "Adaptability", "Adaptability", if_else(Dimension == "NonConformity", "NonConformity", if_else(Dimension=="Grit", "Grit", "Other" )))))))))                            
+######Respondant Background
+#count of respondants
+n_CyberPro <- df %>% filter(CyberPro=="Yes") %>% count(CyberPro) 
+n_Not_CyberPro <- df %>% filter (CyberPro=="No") %>% count(CyberPro) 
+
+#Education
+df_ed <-df %>% select(Education) 
+df_ed$Education<- gsub("\\(", "", df_ed$Education)
+df_ed$Education<- gsub("\\)", "", df_ed$Education)
+df_ed2<-df_ed %>% 
+     separate(col = `Education`, into=c("Education", "Field"), sep = "_", remove = "TRUE") %>% 
+     na.omit(df_ed) %>% 
+     group_by(Education) %>% summarise(n=n()/n_CyberPro$n)
+
+df_ed3<-df_ed %>% separate(Education, c("Education1", "Education2", "Education3", "Education4"), sep=",") %>%
+     gather(Education1:Education4, key=Category, value=Education) %>% select (-Category ) %>% 
+     separate(col = `Education`, into=c("Education", "Field"), sep = "_", remove = "FALSE") %>% 
+     na.omit(df_ed) %>% 
+     group_by(Field) %>% summarise(n=n()/n_CyberPro$n) %>% filter(Field=="CS or Related")
+
+
+#Certifications
+df_cert <-df %>% select(Certifications) 
+df_cert$Certifications<- gsub("\\(", "", df_cert$Certifications)
+df_cert$Certifications<- gsub("\\)", "", df_cert$Certifications)
+df_cert2<-df_cert %>% separate(Certifications, c("Certifications1", "Certifications2", "Certifications3", "Certifications4", "Certifications5", "Certifications6", "Certifications7", "Certifications8", "Certifications9"), sep=",") %>%
+     gather(Certifications1:Certifications9, key=Category, value=Certifications) %>% select (-Category ) %>% 
+     na.omit(df_cert)
+
+df_cert3 <- df_cert2 %>% group_by(Certifications) %>% summarise(n=n())
+ 
+#Hobbies
+df_hobby <-df %>% select(Hobbies) 
+df_hobby$Hobbies<- gsub("\\(", "", df_hobby$Hobbies)
+df_hobby$Hobbies<- gsub("\\)", "", df_hobby$Hobbies)
+df_hobby2<-df_hobby %>% separate(Hobbies, c("Hobbies1", "Hobbies2", "Hobbies3", "Hobbies4", "Hobbies5", "Hobbies6", "Hobbies7", "Hobbies8"), sep=",") %>%
+     gather(Hobbies1:Hobbies8, key=Category, value=Hobbies) %>% select (-Category ) %>% 
+     na.omit(df_hobby) 
+#df_hobby3 <- df_hobby2 %>%  group_by(Hobbies) %>% summarise(n=n())
 
 #Check on Distribution of Results 
 #df2 %>% ggplot(aes(sample=Score), color="lightgreen") +  # Create QQplot with ggplot2 package
  # stat_qq(col="green") +
   #stat_qq_line(col = "red") +facet_wrap(Dimension~.)
 
+#K means clustering
+set.seed(99)
+dfcluster <- dfa %>% select (ID, SearchforKnowledge:Grit)
+dfcluster<- data.frame(dfcluster, row.names=1)
+#dfcluster<- as.data.frame(lapply(dfcluster, scale))
+myclusters <- kmeans(dfcluster, centers = 3, nstart = 25)
+dfcluster2 <- data.frame(dfcluster) %>% cbind(myclusters$cluster)
+dfcluster2 <- dplyr::rename(dfcluster2, cluster = `myclusters$cluster`) 
 ```
 
-### `r CyberPro$n` cybersecurity professionals and `r Not_CyberPro$n` professionals filling non-cybersecurity roles participated in this data collection.
+### `r n_CyberPro$n` cybersecurity professionals participated in this data collection.  `r n_Not_CyberPro$n` other professionals (ex. Program Managers, Systems Engineers) also participated in this data collection.
 
-### Demographic Information (Education, Certifications, Hobbies)
+### Demographic Information of Cyberseucrity Particpants (Education, Certifications, Hobbies)
 
-##### Education:  Highest degree achieved by percentage of cybersecuirty professionals.
+##### Education:  Highest degree achieved by percentage of Northrop Grumman Cybersecuirty Professionals.  Of the `r CyberPro$n` cybersecurity professionals, `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or related fields. 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n, fill= Field), position="dodge")  + 
+df_ed2$Education <- factor(df_ed2$Education, levels = c ("Secondary", "Associates", "Bachelors", "Masters", "PhD"))
+df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n), fill="lightgreen", color="darkgray")  + 
   ylab("Percentage of Particpants") +
   geom_text(aes( x=Education, y=n, label = round(n, 2), ),color="black", vjust= -.1, hjust = .1, size=3.5) +
   xlab ("") +
-  scale_fill_manual(name="Field", values = c("lightgreen", "gray")) +
-  theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
-     facet_grid(.~Field)
+  theme(legend.title= element_text(color="black", size=10), legend.position = "blank") 
+#+     facet_grid(.~Field)
   
 ```
 
-##### Years of Experience of cybersecuirty professionals.
+##### Years of Experience of Northrop Grumman Cybersecuirty Professionals.  The average experience reported was `r df$YearsExperience %>% mean(na.rm=TRUE) %>% round(0)` years.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df %>% filter(CyberPro=="Yes") %>%  ggplot() + geom_histogram(aes(x=YearsExperience),binwidth = 2, fill="lightgreen", color="gray")  + 
+df %>% filter(CyberPro=="Yes") %>%  ggplot() + geom_histogram(aes(x=YearsExperience),binwidth = 4, fill="lightblue", color="darkgray")  + 
      scale_x_continuous(expand = c(0,0),
-                     limits = c(0,32))+
+                     limits = c(0,35)) + 
+     geom_vline(xintercept = 11) + geom_text(aes(x=11, y=0), nudge_x=1.1,label="mean (11 years)")
   xlab("Years of Experience")
+
+summary(df$YearsExperience)
 ```
 
-##### Certifications reported by cybersecurity professionals.
+##### Certifications reported by Northrop Grumman Cybersecurity Professionals.  2-3 certifications were reported by most participants.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 #Create a vector containing only the text
 text <- df_cert2$Certifications # Create a corpus  
-
 docs <- Corpus(VectorSource(text))
 docs <- docs %>%
-  #tm_map(removeNumbers) %>%
-  tm_map(removePunctuation) %>%
   tm_map(stripWhitespace)
 docs <- tm_map(docs, content_transformer(tolower))
 docs <- tm_map(docs, removeWords, stopwords("english"))
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
 words <- sort(rowSums(matrix),decreasing=TRUE) 
-df_text <- data.frame(word = names(words),freq=words)%>%filter(freq>0)
+df_text <- data.frame(word = names(words),freq = words)
 
-wordcloud(words = df_text$word, freq = df_text$freq, min.freq = 0,
-          max.words=200, random.order=FALSE, rot.per=0.35, 
-          colors=brewer.pal(3, "Dark2"))
+wordcloud(words = df_text$word, freq = df_text$freq, min.freq=1, scale=c(7,1), random.order=FALSE, random.color=FALSE, rot.per=0, 
+          colors=brewer.pal(8, "Dark2"))
 
-#df_cert2 %>% mutate(Certifications = reorder(Certifications, n, FUN=mean)) %>% ggplot() + geom_col(aes(x=Certifications, y=n), fill="lightgreen") + 
- # ylab("Percentage of Cybersecurity Professionals") +
- # geom_text(aes( x=Certifications, y=n, label = round(n, 2), ),  hjust = .5, vjust = -.1 , size=3.5, color="red") +
- # xlab ("") +
- # coord_flip()
-  #scale_fill_manual(name="Field", values = c("lightgreen", "gray"))+
-  #theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
-  #facet_grid(.~Field)
 ```
 
-##### Hobbies reported by cybersecurity professionals.
+##### Hobbies reported by Northrop Grumman Cybersecurity Professionals.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 #Create a vector containing only the text
-text <- df_hobby2$Hobbies# Create a corpus  
+text2 <- df_hobby2$Hobbies# Create a corpus  
 
-docs <- Corpus(VectorSource(text))
-docs <- docs %>%
+docs2 <- Corpus(VectorSource(text2))
+docs2 <- docs2 %>%
   #tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(stripWhitespace)
-docs <- tm_map(docs, content_transformer(tolower))
-docs <- tm_map(docs, removeWords, stopwords("english"))
-dtm <- TermDocumentMatrix(docs) 
-matrix <- as.matrix(dtm) 
-words <- sort(rowSums(matrix),decreasing=TRUE) 
-df_text <- data.frame(word = names(words),freq=words)%>%filter(freq>0)
+docs2 <- tm_map(docs2, content_transformer(tolower))
+docs2 <- tm_map(docs2, removeWords, stopwords("english"))
+dtm2 <- TermDocumentMatrix(docs2) 
+matrix2 <- as.matrix(dtm2) 
+words2 <- sort(rowSums(matrix2),decreasing=TRUE) 
+df_text2 <- data.frame(word = names(words2),freq=words2)
 
-wordcloud(words = df_text$word, freq = df_text$freq, min.freq = 0,
-          max.words=200, random.order=FALSE, rot.per=0.35, 
-          colors=brewer.pal(10, "Set3"))
-#df_hobby2 %>% select (Hobbies)  %>% kable (format = "markdown")
-
+wordcloud(words = df_text2$word, freq = df_text2$freq, scale=c(3, 1), min.freq=1, random.order=FALSE, random.color=FALSE, rot.per=0, 
+          colors=brewer.pal(3, "Dark2" ))
 ```
 
 
-### Behavioral Trait Importance
-##### Results of **importance ratings** of 8 personality categories for performance in cybersecurity roles.
+### Personality Trait Raw Scores
+###### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots.  Boxplots graphically depict numerical data through their quartiles. Boxplots are non-parametric: they display variation in samples of a statistical population without making any assumptions of the underlying statistical distribution.  The median value is labeled in **red** text.   Outliers are plotted as black dots.  
 
-* *Adaptability*: ability to adjust to new conditions.
-* *Assessment*: focus on self-evaluation and "doing the right thing."
-* *Curiosity*: seek out situations with potential for new information and experiences.
-* *Grit*: perseverance and passion for long-term goals.
-* *Locomotion*: decisiveness, task orentiation, intrinsic motivation to get the job done.
-* *Need for Cognition*: engage and enjoy effortful cognitive endeavors.
-* *Non-Conformity*: refusal to conform to prevailing rules or practices.
-* *Skepticism*: critically asssessing evidence before making a decision.
-
-##### Mean scores are reproted in green dots with 95% confidence intervals.
-##### **Scale: 1 - Not Important, 7 - Very Important**
+###### T Scores are used to display results in comparison to a reference.  A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.  These T Scores were based on results published in peer reviewed literature noted in the references and data available from the Eugene-Springfield Community Sample at https://dataverse.harvard.edu/dataverse/ESCS-Data.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-############## Importance of the 8 Categories
-df1a <- df1 %>% filter(CyberPro=="Yes") %>% 
-     gather(Adaptability_Importance:Skepticism_Importance, key=Category, value=ImportanceScore)  %>% 
-     summarySE(measurevar = "ImportanceScore", groupvars="Category") %>% separate(col = `Category`, into="Category", sep = "_", remove="TRUE")
-
-df1a %>% 
-  mutate(Category=reorder(Category, ImportanceScore, FUN=sum)) %>%  
-  ggplot(aes(x=Category, y=ImportanceScore)) +
-  geom_point(size=3, color="green") +
-  geom_errorbar(aes(ymin=ImportanceScore-ci, ymax=ImportanceScore+ci), width=.1 ) +
-  theme(legend.title=element_text(color="black", size=10), legend.position="top") + 
-  ylab("Importance Rating") +
-  xlab ("") +
-  #scale_color_manual(name="Group", values = c("green", "blue")) + ylim(-1.2,1.2) +
-  geom_text(aes(label = round(ImportanceScore, 1)), size=3, vjust=-.5, hjust=-.5) +
-  theme (axis.text.x = element_text(angle=0, size=8)) +
-     coord_flip()
-```
-
-### Distribution of Respondent Raw Scores
-
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2 %>% filter (CyberPro=="Yes", Category != "SelfEfficacy") %>% ggplot() + geom_density(aes(x=Score), fill="lightgreen")+facet_wrap(Dimension~., ncol = 4)
-```
-
-### Personality Trait Raw Scores (17 Dimensions)
-###### Cybersecurity professionals are displayed in the **green** boxplots.  Boxplots graphically depict numerical data through their quartiles. Boxplots are non-parametric: they display variation in samples of a statistical population without making any assumptions of the underlying statistical distribution.  The median value is labeled in **red** text.   Outliers are plotted as black dots.
-
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2 %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
+df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
      ungroup() %>% 
      mutate(Dimension=reorder(Dimension, Score, FUN=median)) %>% 
      ggplot(aes(x=Dimension, y=Score)) +
      geom_boxplot(fill="lightgreen") +
-     coord_flip() + ylab("Raw Score") + 
+     coord_flip() + ylab("T Score") + 
      #geom_jitter(aes(color=TechnicalLevel)) +
      xlab("") +
     scale_fill_manual(values = c("red", "lightgreen", "gray", "gray")) +
-  stat_summary(aes(x=Dimension, y=Score, label=round(..y..,2)), fun.y = "median", geom="text", size=3, color="red", hjust = -.2)  + 
-     theme(legend.title=element_text(color="black", size=10), legend.position="blank")
-   
-#+facet_grid(.~TechnicalLevel)
+  stat_summary(aes(x=Dimension, y=Score, label=round(..y..,0)), fun.y = "median", geom="text", size=3, color="red", hjust = -.2)  + 
+     theme(legend.title=element_text(color="black", size=10), legend.position="blank") + ylim(25,75)
 ```
 
 ##### The definition of each dimension, in order of their scores among cybersecurity professionals, is as follows:
-* *SearchforKnowledge*:  Ability to ask questions beyond the obvious answer.
 * *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
-* *JoyousExploration*: Preference for new information and experiences, and the valuing of self-expansion over security.
-* *SelfConfidence*:  Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
-* *InterpersonalUnderstanding*:  Not placing inappropriate degree of trust in people, processes, controls and data.
 * *Locomotion*: decisiveness, task orentiation, intrinsic motivation to get the job done.
-* *SuspensionofJudgement*:  Characteristic of withholding a conclusion on a matter until sufficient evidence to form a basis for a reasonable conclusion has been obtained
-* *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
-* *Need for Cognition*: engage and enjoy effortful cognitive endeavors.
-* *SelfDetermining*:  Taking a step back from an issue, position, or posture and asking "does this make sense to me?"
-* *Grit*: perseverance and passion for long-term goals.
-* *SocialCuriosity*: Desire to know what other people are thinking and doing through overt means (observing and probing questions) or covert means (listening into conversations or gathering second-hand information).
-* *QuestioningMind*:  Attitude to look below the surface and see if the numbers, situation, factors or people look out of place.
-* *Adaptability*: ability to adjust to new conditions.
-* *Assessment*: focus on self-evaluation and "doing the right thing."
-* *ThrillSeeking*: On the hunt for varied, novel, complex, and intense experiences and ready to risk physical, social, and financial safety.
+* *JoyousExploration*: Preference for new information and experiences, and the valuing of self-expansion over security.
 * *Non-Conformity*: refusal to conform to prevailing rules or practices.
+* *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
+* *Adaptability*: ability to adjust to new conditions.
+* *ThrillSeeking*: On the hunt for varied, novel, complex, and intense experiences and ready to risk physical, social, and financial safety.
+* *Need for Cognition*: engage and enjoy effortful cognitive endeavors.
+* *SocialCuriosity*: Desire to know what other people are thinking and doing through overt means (observing and probing questions) or covert means (listening into conversations or gathering  second-hand information).
+* *Professional Skepticism*: Characteristic of withholding a conclusion on a matter until sufficient evidence to form a basis for a reasonable conclusion has been obtained; Taking a step back from an issue, position, or posture and asking "does this make sense to me?"; Attitude to look below the surface and see if the numbers, situation, factors or people look out of place; Ability to ask questions beyond the obvious answer; Not placing inappropriate degree of trust in people, processes, controls and data; Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
+* *Assessment*: focus on self-evaluation and "doing the right thing."
+* *Grit*: perseverance and passion for long-term goals.
 
-### Personality Trait Raw Scores by self-reported Technical Level
+### Personality Traits and Years of Experience.  Several moderate correlations between Years of Experience and Behavioral Traits were observed in the data.  Experience correlated positively with Self-Efficacy, Self-Confidence, Self-Determining, and Stress Tolerance.  Experience correlated negatively with Deprivation Sensitivity and Assessment.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2$TechnicalLevel <- factor(df2$TechnicalLevel, levels=c("Low", "Medium", "High"))
-df2 %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
-     ungroup() %>% mutate(Dimension=reorder(Dimension, Score, FUN=median)) %>% 
-     group_by(Dimension, TechnicalLevel) %>% summarise(Score=mean(Score)) %>% 
-      ggplot(aes(x=Dimension, y=Score, color=TechnicalLevel, group=TechnicalLevel)) +
-     geom_point(size=2) +
-     geom_line(aes(linetype=TechnicalLevel)) +
-     coord_flip() + ylab("Raw Score") + 
-      xlab("") +
-     scale_color_manual(values = c("green", "darkgray", "red")) +
-     scale_linetype_manual(values=c("blank", "dashed", "blank")) +
-     theme(legend.title=element_text(color="black", size=10), legend.position="top")
-```
+dfc <- dfa %>% 
+     filter(CyberPro=="Yes") %>% 
+     select(YearsExperience, ID,YearsExperience, SearchforKnowledge:SelfEfficacy)
 
-### Self-efficacy reported by cybersecurity technical level (High, Medium, Low)
+dfc <- column_to_rownames(dfc, "ID")
+
+Correlation3 <- as.data.frame(cor(dfc))
+Correlation3 <- rownames_to_column(Correlation3, "Category") 
+Correlation3 <- Correlation3 %>% filter(Category=="YearsExperience") %>% gather(SearchforKnowledge:SelfEfficacy, key=Category, value=Correlation) %>%  mutate(CorrStrength=if_else(abs(Correlation)>.45, "Strong", if_else(abs(Correlation)>.25, "Moderate", if_else(abs(Correlation)>.1, "Weak", "None"))))
+
+Correlation3 %>% filter (Correlation>.2 | Correlation <.2) %>% 
+     mutate(Category = fct_reorder(Category, Correlation, .fun='median'))%>% 
+     ggplot(aes(x=Category, y=Correlation, fill=CorrStrength)) + 
+     geom_col() + 
+     scale_fill_manual(values=c("lightgreen", "darkgray", "darkgray")) +
+     geom_text(aes(label = round(Correlation, 1)),color="black", vjust= -.1, hjust = 1, size=3.5) +
+     theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
+     xlab("") +
+     coord_flip() 
+```
+###### Positive Correlations with Experience
 * *Self-Efficacy*:  belief in one's own ability to deal with a prospective situation in cybersecurity roles.
+* *SelfConfidence*:  Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
+* *SelfDetermining*:  Taking a step back from an issue, position, or posture and asking "does this make sense to me?"
+* *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
 
-##### **Scale: 1 - low confidence in ability, 7 - very high confidence in ability/knowledge**
+###### Negative Correlations with Experience
+* *Assessment*: focus on self-evaluation and "doing the right thing."
+* *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-df3 <- df %>% gather(SelfEfficacy1:SelfEfficacy2, key=Question, value = Score)
-df3$Question <- gsub( "SelfEfficacy1", "Ability", df3$Question)
-df3$Question <- gsub( "SelfEfficacy2", "Knowledge", df3$Question)
-df3$TechnicalLevel <-factor(df3$TechnicalLevel, levels = c("High", "Medium", "Low"))
-df3 %>% filter(CyberPro=="Yes") %>% 
-      ggplot(aes(x=Question, y=Score)) +
-     geom_boxplot() +
-     coord_flip() +
-     stat_summary(aes(x=Question, y=Score, label=round(..y..,2)), fun.y = "median", geom="text", size=3, color="red", hjust = -.2) +
-     # facet_grid(TechnicalLevel~.) +
-     ylab("Self-Efficacy Score") +
-     xlab ("") +
-     facet_grid(TechnicalLevel ~.)
-```
 
-### Correlation of Personality Dimensions
-##### Green boxes are drawn around results of hierarchical clustering of these personality dimensions.
+### Self Efficacy Correlations
+
+#####  Self-Efficacy is belief in one's own ability to deal with a prospective situation in cybersecurity roles.
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
-dfcluster <- df1  %>% select(ID, SearchforKnowledge:Grit)
+dfd <- dfa %>% 
+     filter(CyberPro=="Yes") %>% 
+     select(ID, SearchforKnowledge:SelfEfficacy)
+dfd <- column_to_rownames(dfd, "ID")
 
-dfcluster<-data.frame(dfcluster, row.names=1)
+Correlation <- as.data.frame(cor(dfd))
+Correlation <- rownames_to_column(Correlation, "Category") 
+Correlation <- Correlation %>% filter(Category=="SelfEfficacy") %>% gather(SearchforKnowledge:SelfEfficacy, key=Category, value=NG_CyberSecurity)
 
-corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=3, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
+dfe <- dfa %>% 
+    filter(CyberPro=="No") %>% 
+     select(ID, SearchforKnowledge:SelfEfficacy)
+dfe <- column_to_rownames(dfe, "ID")
+
+Correlation2 <- as.data.frame(cor(dfe))
+Correlation2 <- rownames_to_column(Correlation2, "Category") 
+Correlation2<- Correlation2 %>% filter(Category=="SelfEfficacy") %>% gather(SearchforKnowledge:SelfEfficacy, key=Category, value=NG_Other)
+
+EfficacyCorrelation <- Correlation %>% left_join(Correlation2) %>% gather(NG_CyberSecurity:NG_Other, key=Group, value=Score) %>% mutate(CorrStrength=if_else(Score>.45, "Strong", if_else(Score>.25, "Moderate", if_else(Score>.1, "Weak", "None"))))
+EfficacyCorrelation$CorrStrength <-factor(EfficacyCorrelation$CorrStrength, levels = c("Strong", "Moderate", "Weak", "None"))
+
+EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>% 
+     mutate(Category = fct_reorder(Category, Score, .fun='median'))%>% 
+     ggplot(aes(x=Category, y=Score, fill=CorrStrength)) + 
+     geom_col() + 
+     scale_fill_manual(values=c("green", "lightgreen", "darkgray")) +
+     geom_text(aes(label = round(Score, 1)),color="black", vjust= -.1, hjust = 1, size=3.5) +
+     theme(legend.title= element_text(color="black", size=10), legend.position = "blank") +
+     coord_flip() + facet_grid(.~Group) + xlab("")
 ```
+
+### K Means Clustering
+
+###### K means clustering identified three distinct clusters based on all respondant responses.
+######  The largest cluster, *Cluster 2*, generally scored high across all the dimensions.  
+###### Cluster 1, consists of respondants with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and significantly higher Suspension of Judgement.
+###### Cluster 3, consists of respondants with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
+###### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
+
+```{r message=FALSE, warning=FALSE,echo=FALSE}
+###Cluster profiles
+dfcluster2a <- dfcluster2 %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)
+dfcluster2a$cluster<-as.factor(dfcluster2a$cluster)
+dfcluster3<-dfcluster2a %>% group_by(Category, cluster) %>% summarise(Score=mean(Score))
+dfcluster3$cluster<- paste("Cluster", dfcluster3$cluster) 
+df_sd <- dfcluster3 %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(sd=if_else(sd>.09, "High", "Low"))
+dfcluster3 <- dfcluster3 %>% left_join(df_sd)
+myclusters$cluster
+myclusters$centers
+myclusters$size
+fviz_cluster(myclusters, data = dfcluster)
+
+dfcluster3 %>% ungroup() %>% 
+     mutate(Category = fct_reorder(Category, Score, .fun=max)) %>% 
+     ggplot(aes (x=Category, y=Score, group=cluster)) + 
+     geom_point(aes(shape=cluster, color=sd),size=3) +
+     geom_line(aes(linetype=cluster)) +
+     scale_linetype_manual(values = c("blank", "dashed", "blank")) +
+     scale_color_manual(values = c("green", "darkgray", "green")) +
+     coord_flip() + 
+     #facet_grid(.~cluster)  +
+     theme(legend.title= element_text(color="blue", size=10), legend.position = "top") + xlab("") +ylim(0.4,1)
+```
+
+### Analysis of the Questionnaire: Correlation of Personality Dimensions
+
+##### Green boxes are drawn around results of hierarchical clustering of personality dimensions based on responses to the personality questionnaire.
+
+```{r message=FALSE, warning=FALSE,echo=FALSE}
+corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
+```
+
+
+
 
 ### Army Tier1 Comparison: Personality Trait Raw Scores by self-reported Tier1 category
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2b <- df2 %>% filter(CyberPro=="Yes") %>%  separate(Tier1Comparison, "Tier1Comparison", sep="-")
+df2z <- df2 %>% filter(CyberPro=="Yes") %>%  separate(Tier1Comparison, "Tier1Comparison", sep="-")
 #df2b$Tier1Comparison <- factor(df2b$Tier1Comparison, levels=c("Capabilities Developer", "Exploitation Analyst", "NA"))
-df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
+df2z %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
      ungroup() %>% mutate(Dimension=reorder(Dimension, Score, FUN=median)) %>% 
      group_by(Dimension, Tier1Comparison) %>% summarise(Score=mean(Score)) %>% 
       ggplot(aes(x=Dimension, y=Score, color=Tier1Comparison, group=Tier1Comparison)) +
@@ -341,3 +385,21 @@ df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>%
 ###### Hurt, R. K. (2010, May). Development of a Scale to Measure Professional Skepticism. *Auditing: A Journal of Practice and Theory*, 29(1), 149-171.
 ###### Kashdan, T. B., Stiksma, M. C., Disabato, D. J., Mcknight, P. E.,, Bekier, J., Kaji, J., Lazarus, R. (2017, December). The Five-Dimension Curiosity Scale: Capturing the bandwidth of curisity and identifying four unique subgrups of curious people. *Journal for Research in Personality*, 73, 130-149.
 ###### Kruglanski, A. W., Thompson, E. P., Higgins, E. T., Atash, M. N., Pierro, A., Shah, J. Y., Spiegel, S. (2000, Nov). To "do the right thing" or to "just do it": Locomotion and assessment as distinct self-regulatory imperatives. *Journal of Personality and Social Psychology*, 79(5), 793-815.
+
+* *SearchforKnowledge*:  Ability to ask questions beyond the obvious answer.
+* *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
+* *JoyousExploration*: Preference for new information and experiences, and the valuing of self-expansion over security.
+* *SelfConfidence*:  Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
+* *InterpersonalUnderstanding*:  Not placing inappropriate degree of trust in people, processes, controls and data.
+* *Locomotion*: decisiveness, task orentiation, intrinsic motivation to get the job done.
+* *SuspensionofJudgement*:  Characteristic of withholding a conclusion on a matter until sufficient evidence to form a basis for a reasonable conclusion has been obtained
+* *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
+* *Need for Cognition*: engage and enjoy effortful cognitive endeavors.
+* *SelfDetermining*:  Taking a step back from an issue, position, or posture and asking "does this make sense to me?"
+* *Grit*: perseverance and passion for long-term goals.
+* *SocialCuriosity*: Desire to know what other people are thinking and doing through overt means (observing and probing questions) or covert means (listening into conversations or gathering second-hand information).
+* *QuestioningMind*:  Attitude to look below the surface and see if the numbers, situation, factors or people look out of place.
+* *Adaptability*: ability to adjust to new conditions.
+* *Assessment*: focus on self-evaluation and "doing the right thing."
+* *ThrillSeeking*: On the hunt for varied, novel, complex, and intense experiences and ready to risk physical, social, and financial safety.
+* *Non-Conformity*: refusal to conform to prevailing rules or practices.
