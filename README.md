@@ -92,23 +92,23 @@ Northrop Grumman CATTConV Survey Results
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-##### The largest cluster, *Cluster 3*, generally scored high across all the dimensions.
+##### The largest cluster, *Cluster xx*, generally scored high across all the dimensions.
 
-##### Cluster 1, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
+##### Cluster xx, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
 
-##### Cluster 2, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.
+##### Cluster xx, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.
 
 ##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptability, Grit, Suspension of Judgement.
 
-## Correlation Analysis of the Questionnaire’s Personality Dimensions
+## Correlation Analysis of Personality Dimensions
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ##### Correlation coefficients are displayed and shaded based on strength.
 
 ##### Green boxes are drawn from Hierarchical Clustering of personality dimensions.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
-
-#### References:
+## References:
 
 ###### Adaptability and Conformity, International Personality Item Pool: A Scientific Collaboratory for the Development of Advanced Measures of Personality Traits and Other Individual Differences. <http://ipip.ori.org/>
 
