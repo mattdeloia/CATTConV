@@ -141,15 +141,17 @@ dfcluster2 <- data.frame(dfcluster) %>% cbind(myclusters$cluster)
 dfcluster2 <- dplyr::rename(dfcluster2, cluster = `myclusters$cluster`) 
 ```
 
-### `r n_CyberPro$n` cybersecurity professionals participated in this data collection.  `r n_Not_CyberPro$n` other professionals (ex. Program Managers, Systems Engineers) also participated in this data collection.
+### `r n_CyberPro$n` Northrop Grumman Cybersecurity Professionals participated in this data collection and `r n_Not_CyberPro$n` other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
 
-### Demographic Information of Cyberseucrity Particpants (Education, Certifications, Hobbies)
+### Demographic Information
 
-##### Education:  Highest degree achieved by percentage of Northrop Grumman Cybersecuirty Professionals.  Of the `r n_CyberPro$n` cybersecurity professionals, `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or related fields. 
+#### Cyberseucrity Particpants Education Column Plot
+##### Highest degree of Northrop Grumman Cybersecuirty Professionals.  `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or CS related fields. 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 df_ed2$Education <- factor(df_ed2$Education, levels = c ("Secondary", "Associates", "Bachelors", "Masters", "PhD"))
-df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n), fill="lightgreen", color="darkgray")  + 
+df_ed2 %>% ggplot() + 
+  geom_col(aes(x=Education, y=n), fill="lightgreen", color="darkgray")  + 
   ylab("Percentage of Particpants") +
   geom_text(aes( x=Education, y=n, label = round(n, 2), ),color="black", vjust= -.1, hjust = .1, size=3.5) +
   xlab ("") +
@@ -158,19 +160,22 @@ df_ed2 %>% ggplot() + geom_col(aes(x=Education, y=n), fill="lightgreen", color="
   
 ```
 
-##### Years of Experience of Northrop Grumman Cybersecuirty Professionals.  The average experience reported was `r df$YearsExperience %>% mean(na.rm=TRUE) %>% round(0)` years.
+#### Experience Histogram
+##### Northrop Grumman Cybersecuirty Professionals reported, on average, `r df$YearsExperience %>% mean(na.rm=TRUE) %>% round(0)` years years of experience.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df %>% filter(CyberPro=="Yes") %>%  ggplot() + geom_histogram(aes(x=YearsExperience),binwidth = 4, fill="lightblue", color="darkgray")  + 
-     scale_x_continuous(expand = c(0,0),
-                     limits = c(0,35)) + 
-     geom_vline(xintercept = 11) + geom_text(aes(x=11, y=0), nudge_x=1.1,label="mean (11 years)")
+df %>% filter(CyberPro=="Yes") %>%  ggplot() + 
+  geom_histogram(aes(x=YearsExperience),binwidth = 4, fill="lightblue", color="darkgray")  +
+  scale_x_continuous(expand = c(0,0),limits = c(0,35)) +
+  geom_vline(xintercept = 11) + 
+  geom_text(aes(x=11, y=0), nudge_x=1.1,label="mean (11 years)") +
   xlab("Years of Experience")
 
-summary(df$YearsExperience)
+#summary(df$YearsExperience)
 ```
 
-##### Certifications reported by Northrop Grumman Cybersecurity Professionals.  2-3 certifications were reported by most participants.
+#### Certifications Word Cloud
+##### Northrop Grumman Cybersecurity Professionals reported, on average, 2-3 certifications.  
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 #Create a vector containing only the text
@@ -190,6 +195,7 @@ wordcloud(words = df_text$word, freq = df_text$freq, min.freq=1, scale=c(7,1), r
 
 ```
 
+#### Hobbies Word Cloud.
 ##### Hobbies reported by Northrop Grumman Cybersecurity Professionals.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
@@ -213,10 +219,12 @@ wordcloud(words = df_text2$word, freq = df_text2$freq, scale=c(3, 1), min.freq=1
 ```
 
 
-### Personality Trait Raw Scores
-###### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots.  Boxplots graphically depict numerical data through their quartiles. Boxplots are non-parametric: they display variation in samples of a statistical population without making any assumptions of the underlying statistical distribution.  The median value is labeled in **red** text.   Outliers are plotted as black dots.  
+### Cybersecurity Personality Trait Results
+#### Personality Trait Boxplots
+##### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots.  ###### Boxplots graphically depict numerical data through their quartiles.  The median value is labeled in **red** text.   Outliers are plotted as black dots.  
 
-###### T Scores are used to display results in comparison to a reference.  A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.  These T Scores were based on results published in peer reviewed literature noted in the references and data available from the Eugene-Springfield Community Sample at https://dataverse.harvard.edu/dataverse/ESCS-Data.
+###### T Scores are used to display results in comparison to a reference.  A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.  
+###### These T Scores were based on results published in peer reviewed literature noted in the References and data available from the Eugene-Springfield Community Sample at https://dataverse.harvard.edu/dataverse/ESCS-Data.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
@@ -232,7 +240,7 @@ df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>%
      theme(legend.title=element_text(color="black", size=10), legend.position="blank") + ylim(25,75)
 ```
 
-##### The definition of each dimension, in order of their scores among cybersecurity professionals, is as follows:
+###### The definition of each dimension, in order of their scores among Northrop Grumman's Cybersecurity Professionals, is as follows:
 * *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
 * *Locomotion*: decisiveness, task orentiation, intrinsic motivation to get the job done.
 * *JoyousExploration*: Preference for new information and experiences, and the valuing of self-expansion over security.
@@ -246,7 +254,8 @@ df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>%
 * *Assessment*: focus on self-evaluation and "doing the right thing."
 * *Grit*: perseverance and passion for long-term goals.
 
-### Personality Traits and Years of Experience.  Several moderate correlations between Years of Experience and Behavioral Traits were observed in the data.  Experience correlated positively with Self-Efficacy, Self-Confidence, Self-Determining, and Stress Tolerance.  Experience correlated negatively with Deprivation Sensitivity and Assessment.
+#### Personality Traits and Years of Experience
+##### Data analysis determined several Moderate correlations between Behavioral Traits and Years of Experience.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 dfc <- dfa %>% 
@@ -269,6 +278,7 @@ Correlation3 %>% filter (Correlation>.2 | Correlation <.2) %>%
      xlab("") +
      coord_flip() 
 ```
+
 ###### Positive Correlations with Experience
 * *Self-Efficacy*:  belief in one's own ability to deal with a prospective situation in cybersecurity roles.
 * *SelfConfidence*:  Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
@@ -280,9 +290,8 @@ Correlation3 %>% filter (Correlation>.2 | Correlation <.2) %>%
 * *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
 
 
-### Self Efficacy Correlations
-
-#####  Self-Efficacy is belief in one's own ability to deal with a prospective situation in cybersecurity roles.
+#### Self-Efficacy Correlations
+#####  Respondants rated Self-Efficacy, one's own ability to deal with a prospective situation, for the knowledge and abilty to work in the cybersecurity field.  
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfd <- dfa %>% 
@@ -316,13 +325,12 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>%
      coord_flip() + facet_grid(.~Group) + xlab("")
 ```
 
-### K Means Clustering
+###### Northrop Grumman's Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
+###### Others Northrol Grumman Employees (non-Cybersecurity): Joyous Exploration, Stress Tolerance, and Locomotion correlated highest
 
-###### K means clustering identified three distinct clusters based on all respondant responses.
-######  The largest cluster, *Cluster 2*, generally scored high across all the dimensions.  
-###### Cluster 1, consists of respondants with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and significantly higher Suspension of Judgement.
-###### Cluster 3, consists of respondants with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
-###### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
+#### K Means Clustering
+
+##### K means clustering identified three distinct personality profiles based on respondant responses.
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 ###Cluster profiles
@@ -348,12 +356,17 @@ dfcluster3 %>% ungroup() %>%
      scale_color_manual(values = c("green", "darkgray", "blue")) +
      coord_flip() + 
      #facet_grid(.~cluster)  +
-     theme(legend.title= element_text(color="blue", size=10), legend.position = "top") + xlab("") +ylim(0.4,1)
+     theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
+      xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized")
 ```
 
-### Analysis of the Questionnaire: Correlation of Personality Dimensions
+######  The largest cluster, *Cluster 2*, generally scored high across all the dimensions.  
+###### Cluster 1, consists of respondants with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and significantly higher Suspension of Judgement.
+###### Cluster 3, consists of respondants with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
+###### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
 
-##### Green boxes are drawn around results of hierarchical clustering of personality dimensions based on responses to the personality questionnaire.
+#### Correlation Analysis of the Questionnaire's Personality Dimensions
+#### Correlation coefficients are displayed and colored based on strength.  Green boxes are drawn around Hierarchical Clustering of personality dimensions based on responses to the personality questionnaire.
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
@@ -367,6 +380,7 @@ corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=12
 ###### Kashdan, T. B., Stiksma, M. C., Disabato, D. J., Mcknight, P. E.,, Bekier, J., Kaji, J., Lazarus, R. (2017, December). The Five-Dimension Curiosity Scale: Capturing the bandwidth of curisity and identifying four unique subgrups of curious people. *Journal for Research in Personality*, 73, 130-149.
 ###### Kruglanski, A. W., Thompson, E. P., Higgins, E. T., Atash, M. N., Pierro, A., Shah, J. Y., Spiegel, S. (2000, Nov). To "do the right thing" or to "just do it": Locomotion and assessment as distinct self-regulatory imperatives. *Journal of Personality and Social Psychology*, 79(5), 793-815.
 
+#### Definitions of Personality Dimensions
 * *SearchforKnowledge*:  Ability to ask questions beyond the obvious answer.
 * *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
 * *JoyousExploration*: Preference for new information and experiences, and the valuing of self-expansion over security.
