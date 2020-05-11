@@ -1,44 +1,47 @@
 Northrop Grumman CATTConV Survey Results
 ================
 
-### 63 cybersecurity professionals participated in this data collection. 38 other professionals (ex. Program Managers, Systems Engineers) also participated in this data collection.
+### 63 Northrop Grumman Cybersecurity Professionals participated in this data collection and 39 other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
 
-### Demographic Information of Cyberseucrity Particpants (Education, Certifications, Hobbies)
+### Demographic Information
 
-##### Education: Highest degree achieved by percentage of Northrop Grumman Cybersecuirty Professionals. Of the 63 cybersecurity professionals, 76 percent have degrees in Computer Science or related fields.
+#### Cyberseucrity Particpants Education Column Plot
+
+##### Highest degree of Northrop Grumman Cybersecuirty Professionals. 76 percent have degrees in Computer Science or CS related fields.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-##### Years of Experience of Northrop Grumman Cybersecuirty Professionals. The average experience reported was 11 years.
+#### Experience Histogram
+
+##### Northrop Grumman Cybersecuirty Professionals reported, on average, 11 years years of experience.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-    ## $x
-    ## [1] "Years of Experience"
-    ## 
-    ## attr(,"class")
-    ## [1] "labels"
+#### Certifications Word Cloud
 
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    ##    0.00    4.00   10.00   11.25   19.50   30.00      38
-
-##### Certifications reported by Northrop Grumman Cybersecurity Professionals. 2-3 certifications were reported by most participants.
+##### Northrop Grumman Cybersecurity Professionals reported, on average, 2-3 certifications.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+#### Hobbies Word Cloud.
 
 ##### Hobbies reported by Northrop Grumman Cybersecurity Professionals.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-### Personality Trait Raw Scores
+### Cybersecurity Personality Trait Results
 
-###### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots. Boxplots graphically depict numerical data through their quartiles. Boxplots are non-parametric: they display variation in samples of a statistical population without making any assumptions of the underlying statistical distribution. The median value is labeled in **red** text. Outliers are plotted as black dots.
+#### Personality Trait Boxplots
 
-###### T Scores are used to display results in comparison to a reference. A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively. These T Scores were based on results published in peer reviewed literature noted in the references and data available from the Eugene-Springfield Community Sample at <https://dataverse.harvard.edu/dataverse/ESCS-Data>.
+##### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots. \#\#\#\#\#\# Boxplots graphically depict numerical data through their quartiles. The median value is labeled in **red** text. Outliers are plotted as black dots.
+
+###### T Scores are used to display results in comparison to a reference. A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.
+
+###### These T Scores were based on results published in peer reviewed literature noted in the References and data available from the Eugene-Springfield Community Sample at <https://dataverse.harvard.edu/dataverse/ESCS-Data>.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-##### The definition of each dimension, in order of their scores among cybersecurity professionals, is as follows:
+###### The definition of each dimension, in order of their scores among Northrop Grumman’s Cybersecurity Professionals, is as follows:
 
   - *StressTolerance*: Ability to cope win the anxiety inherent in
     confronting the new, unexpected, complex, mysterious, and obscure
@@ -75,17 +78,23 @@ Northrop Grumman CATTConV Survey Results
   - *Assessment*: focus on self-evaluation and “doing the right thing.”
   - *Grit*: perseverance and passion for long-term goals.
 
-### Personality Traits and Years of Experience. Several moderate correlations between Years of Experience and Behavioral Traits were observed in the data. Experience correlated positively with Self-Efficacy, Self-Confidence, Self-Determining, and Stress Tolerance. Experience correlated negatively with Deprivation Sensitivity and Assessment.
+#### Personality Traits and Years of Experience
+
+##### Data analysis determined several Moderate correlations between Behavioral Traits and Years of Experience.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
-\#\#\#\#\#\# Positive Correlations with Experience \* *Self-Efficacy*:
-belief in one’s own ability to deal with a prospective situation in
-cybersecurity roles. \* *SelfConfidence*: Someone who would be unafraid
-to pursue a resolution when he/she uncovers a questionable activity. \*
-*SelfDetermining*: Taking a step back from an issue, position, or
-posture and asking “does this make sense to me?” \* *StressTolerance*:
-Ability to cope win the anxiety inherent in confronting the new,
-unexpected, complex, mysterious, and obscure events.
+
+###### Positive Correlations with Experience
+
+  - *Self-Efficacy*: belief in one’s own ability to deal with a
+    prospective situation in cybersecurity roles.
+  - *SelfConfidence*: Someone who would be unafraid to pursue a
+    resolution when he/she uncovers a questionable activity.
+  - *SelfDetermining*: Taking a step back from an issue, position, or
+    posture and asking “does this make sense to me?”
+  - *StressTolerance*: Ability to cope win the anxiety inherent in
+    confronting the new, unexpected, complex, mysterious, and obscure
+    events.
 
 ###### Negative Correlations with Experience
 
@@ -94,15 +103,21 @@ unexpected, complex, mysterious, and obscure events.
     of not knowing something. Intellectually engaged to think about
     abstract or complex ideas and solve problems.
 
-### Self Efficacy Correlations
+#### Self-Efficacy Correlations
 
-##### Self-Efficacy is belief in one’s own ability to deal with a prospective situation in cybersecurity roles.
+##### Respondants rated Self-Efficacy, one’s own ability to deal with a prospective situation, for the knowledge and abilty to work in the cybersecurity field.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-### K Means Clustering
+###### Northrop Grumman’s Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
 
-###### K means clustering identified three distinct clusters based on all respondant responses.
+###### Others Northrol Grumman Employees (non-Cybersecurity): Joyous Exploration, Stress Tolerance, and Locomotion correlated highest
+
+#### K Means Clustering
+
+##### K means clustering identified three distinct personality profiles based on respondant responses.
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ###### The largest cluster, *Cluster 2*, generally scored high across all the dimensions.
 
@@ -112,11 +127,9 @@ unexpected, complex, mysterious, and obscure events.
 
 ###### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+#### Correlation Analysis of the Questionnaire’s Personality Dimensions
 
-### Analysis of the Questionnaire: Correlation of Personality Dimensions
-
-##### Green boxes are drawn around results of hierarchical clustering of personality dimensions based on responses to the personality questionnaire.
+#### Correlation coefficients are displayed and colored based on strength. Green boxes are drawn around Hierarchical Clustering of personality dimensions based on responses to the personality questionnaire.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
@@ -133,6 +146,8 @@ unexpected, complex, mysterious, and obscure events.
 ###### Kashdan, T. B., Stiksma, M. C., Disabato, D. J., Mcknight, P. E.,, Bekier, J., Kaji, J., Lazarus, R. (2017, December). The Five-Dimension Curiosity Scale: Capturing the bandwidth of curisity and identifying four unique subgrups of curious people. *Journal for Research in Personality*, 73, 130-149.
 
 ###### Kruglanski, A. W., Thompson, E. P., Higgins, E. T., Atash, M. N., Pierro, A., Shah, J. Y., Spiegel, S. (2000, Nov). To “do the right thing” or to “just do it”: Locomotion and assessment as distinct self-regulatory imperatives. *Journal of Personality and Social Psychology*, 79(5), 793-815.
+
+#### Definitions of Personality Dimensions
 
   - *SearchforKnowledge*: Ability to ask questions beyond the obvious
     answer.
