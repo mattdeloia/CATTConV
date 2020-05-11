@@ -19,6 +19,10 @@ library(wordcloud)
 library(wordcloud2)
 library(RColorBrewer)
 library(data.table)
+library(ggdendro)
+library(factoextra)
+library(randomForest)
+
 
 df<- read_excel("CATTConSurveyResults.xls")
 
@@ -35,7 +39,7 @@ df[,columnsToReverse] <- 7-df[, columnsToReverse]
 dfa <- df %>% group_by(ID) %>%  
      mutate("SearchforKnowledge" = (sum(Skepticism1,Skepticism2,Skepticism3,Skepticism4,Skepticism5,Skepticism6) / 36) ,      
       "SuspensionofJudgement" = (sum(Skepticism7, Skepticism8,Skepticism9,Skepticism10,Skepticism11)/ 30), 
-     "SelfDetermining" = (sum(Skepticism12,Skepticism13,Skepticism14,Skepticism15,Skepticism16,Skepticism17) / 36) , 
+     "SelfDetermining" = (sum(Skepticism13,Skepticism14,Skepticism15,Skepticism16,Skepticism17) / 30) , #Removed Skepticism12
      "InterpersonalUnderstanding" = (sum(Skepticism18, Skepticism19,Skepticism20,Skepticism21,Skepticism22) / 30) , 
      "SelfConfidence" = (sum(Skepticism23, Skepticism24,Skepticism25,Skepticism26,Skepticism27) / 30) , 
      "QuestioningMind" = (sum(Skepticism28, Skepticism29, Skepticism30)/ 18) , 
@@ -44,12 +48,12 @@ dfa <- df %>% group_by(ID) %>%
      "StressTolerance" = (sum(Curiosity11,Curiosity12,Curiosity13,Curiosity14,Curiosity15) / 30) , 
      "SocialCuriosity" = (sum(Curiosity16,Curiosity17,Curiosity18,Curiosity19,Curiosity20) / 30) , 
      "ThrillSeeking" = (sum(Curiosity21,Curiosity22,Curiosity23,Curiosity24,Curiosity25) / 30) , 
-     "NeedforCognition" = (sum(NeedCognition1,NeedCognition2,NeedCognition3,NeedCognition4,NeedCognition5,NeedCognition6,NeedCognition7,NeedCognition8,NeedCognition9,NeedCognition10,NeedCognition11,NeedCognition12,NeedCognition13,NeedCognition14,NeedCognition15,NeedCognition16,NeedCognition17,NeedCognition18) / 108) , 
-     "Locomotion" = (sum(SelfRegulation1,SelfRegulation2,SelfRegulation3,SelfRegulation4,SelfRegulation5,SelfRegulation6,SelfRegulation7,SelfRegulation8,SelfRegulation9,SelfRegulation10,SelfRegulation11, SelfRegulation12) / 72) , 
-     "Assessment" = (sum(`SelfRegulation13`,SelfRegulation14,SelfRegulation15,SelfRegulation16,SelfRegulation17,SelfRegulation18,SelfRegulation19,SelfRegulation20,SelfRegulation21,SelfRegulation22,SelfRegulation23,SelfRegulation24) / 72) ,      
-     "NonConformity"= (sum(NonConformity1,NonConformity2,NonConformity3,NonConformity4,NonConformity5,NonConformity6,NonConformity7,NonConformity8,NonConformity9,NonConformity10) / 60) , 
-     "Adaptability"= (sum (Adaptability1,Adaptability2,Adaptability3,Adaptability4,Adaptability5,Adaptability6,Adaptability7,Adaptability8) / 56) ,
-     "Grit" = (sum (Grit1,Grit2,Grit3,Grit4,Grit5,Grit6,Grit7,Grit8)/ 48),
+     "NeedforCognition" = (sum(NeedCognition1,NeedCognition2,NeedCognition3,NeedCognition4,NeedCognition5,NeedCognition6,NeedCognition7,NeedCognition9,NeedCognition10,NeedCognition11,NeedCognition12,NeedCognition13,NeedCognition14,NeedCognition15,NeedCognition16,NeedCognition17,NeedCognition18) / 102) , # Removed NeedCognition8,
+     "Locomotion" = (sum(SelfRegulation1,SelfRegulation2,SelfRegulation3,SelfRegulation4,SelfRegulation5,SelfRegulation7,SelfRegulation8,SelfRegulation10,SelfRegulation11, SelfRegulation12) / 60) , #Removed SelfRegulation6, SelfRegulation9
+     "Assessment" = (sum(SelfRegulation14,SelfRegulation15,SelfRegulation16,SelfRegulation18,SelfRegulation19,SelfRegulation20,SelfRegulation21,SelfRegulation22,SelfRegulation24) / 54) ,   #Removed   `SelfRegulation13`, SelfRegulation17,SelfRegulation23
+     "NonConformity"= (sum(NonConformity2,NonConformity3,NonConformity4,NonConformity5,NonConformity7,NonConformity9,NonConformity10) / 42) , # Removed NonConformity1, NonConformity6, NonConformity8,
+     "Adaptability"= (sum (Adaptability1,Adaptability2,Adaptability3,Adaptability5,Adaptability6,Adaptability7,Adaptability8) / 42) , #Removed Adaptability4
+     "Grit" = (sum (Grit1,Grit3,Grit4,Grit5,Grit6,Grit7,Grit8)/ 42), #Removed Grit 2
      "SelfEfficacy" = (sum (SelfEfficacy1, SelfEfficacy2)/ 14 )) %>%
           select (ID, CyberPro:OtherTraits, SearchforKnowledge:SelfEfficacy) 
 
@@ -132,25 +136,32 @@ df_hobby2<-df_hobby %>% separate(Hobbies, c("Hobbies1", "Hobbies2", "Hobbies3", 
   #stat_qq_line(col = "red") +facet_wrap(Dimension~.)
 
 #K means clustering
-set.seed(99)
-dfcluster <- dfa %>% select (ID, SearchforKnowledge:Grit)
-dfcluster<- data.frame(dfcluster, row.names=1)
-#dfcluster<- as.data.frame(lapply(dfcluster, scale))
-myclusters <- kmeans(dfcluster, centers = 3, nstart = 25)
-dfcluster2 <- data.frame(dfcluster) %>% cbind(myclusters$cluster)
-dfcluster2 <- dplyr::rename(dfcluster2, cluster = `myclusters$cluster`) 
+set.seed(100)
+
+dfclustera <- dfa %>% select (ID,SearchforKnowledge:Grit)
+dfclustera<- data.frame(dfclustera, row.names=1)
+myclustersa <- kmeans(dfclustera, centers = 3, nstart = 25)
+dfclustera <- data.frame(dfclustera) %>% cbind(myclustersa$cluster)
+dfclustera <- dplyr::rename(dfclustera, cluster = `myclustersa$cluster`) 
+
+
+dfclusterb <- dfa %>% select (ID,JoyousExploration:ThrillSeeking)
+dfclusterb<- data.frame(dfclusterb, row.names=1)
+myclustersb <- kmeans(dfclusterb, centers = 4, nstart = 25)
+dfclusterb <- data.frame(dfclusterb) %>% cbind(myclustersb$cluster)
+dfclusterb <- dplyr::rename(dfclusterb, cluster = `myclustersb$cluster`) 
 ```
 
 #### `r n_CyberPro$n` Northrop Grumman Cybersecurity Professionals participated in this data collection and `r n_Not_CyberPro$n` other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
 
-## Cyberseucrity Particpants Education Column Plot
-##### Highest degree of Northrop Grumman Cybersecuirty Professionals.  `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or CS related fields. 
+## Cybersecurity Participants Education Column Plot
+##### Highest degree of Northrop Grumman Cybersecurity Professionals.  `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or CS related fields. 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 df_ed2$Education <- factor(df_ed2$Education, levels = c ("Secondary", "Associates", "Bachelors", "Masters", "PhD"))
 df_ed2 %>% ggplot() + 
   geom_col(aes(x=Education, y=n), fill="lightgreen", color="darkgray")  + 
-  ylab("Percentage of Particpants") +
+  ylab("Percentage of Participants") +
   geom_text(aes( x=Education, y=n, label = round(n, 2), ),color="black", vjust= -.1, hjust = .1, size=3.5) +
   xlab ("") +
   theme(legend.title= element_text(color="black", size=10), legend.position = "blank") 
@@ -159,7 +170,7 @@ df_ed2 %>% ggplot() +
 ```
 
 ## Experience Histogram
-##### Northrop Grumman Cybersecuirty Professionals reported, on average, `r df$YearsExperience %>% mean(na.rm=TRUE) %>% round(0)` years years of experience.
+##### Northrop Grumman Cybersecurity Professionals reported, on average, `r df$YearsExperience %>% mean(na.rm=TRUE) %>% round(0)` years years of experience.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 df %>% filter(CyberPro=="Yes") %>%  ggplot() + 
@@ -193,7 +204,7 @@ wordcloud(words = df_text$word, freq = df_text$freq, min.freq=1, scale=c(7,1), r
 
 ```
 
-## Hobbies Word Cloud.
+## Hobbies Word Cloud
 ##### Hobbies reported by Northrop Grumman Cybersecurity Professionals.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
@@ -216,42 +227,20 @@ wordcloud(words = df_text2$word, freq = df_text2$freq, scale=c(3, 1), min.freq=1
           colors=brewer.pal(3, "Dark2" ))
 ```
 
-## Personality Trait Boxplots
-##### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots.
-
-##### Boxplots graphically depict numerical data through their quartiles.  The median value is labeled in **red** text.   Outliers are plotted as black dots. 
-
-##### T Scores are used to display results in comparison to a reference.  A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.  
-
-##### These T Scores were based on results published in peer reviewed literature noted in the References and data available from the Eugene-Springfield Community Sample at https://dataverse.harvard.edu/dataverse/ESCS-Data.
+## Distribution of Personality Raw Scores
+##### Northrop Grumman Cybersecurity professionals raw scores are displayed as density plots for 17 personality dimensions.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
-     ungroup() %>% 
-     mutate(Dimension=reorder(Dimension, Score, FUN=median)) %>% 
-     ggplot(aes(x=Dimension, y=Score)) +
-     geom_boxplot(fill="lightgreen") +
-     coord_flip() + ylab("T Score") + 
-     #geom_jitter(aes(color=TechnicalLevel)) +
-     xlab("") +
-    scale_fill_manual(values = c("red", "lightgreen", "gray", "gray")) +
-  stat_summary(aes(x=Dimension, y=Score, label=round(..y..,0)), fun.y = "median", geom="text", size=3, color="red", hjust = -.2)  + 
-     theme(legend.title=element_text(color="black", size=10), legend.position="blank") + ylim(25,75)
+df2a %>% filter(Dimension != "SelfEfficacy", CyberPro=="Yes") %>% 
+  ggplot() +
+  geom_density(aes(x=Score), fill="lightgreen") +
+  facet_wrap(Dimension~., ncol=4) + geom_vline(aes(xintercept=.50)) +
+  xlim (0,1) +
+  xlab ("Raw Score Normalized")
+
 ```
 
-##### The definition of each dimension, in order of their scores among Northrop Grumman's Cybersecurity Professionals, is as follows:
-* *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
-* *Locomotion*: decisiveness, task orentiation, intrinsic motivation to get the job done.
-* *JoyousExploration*: Preference for new information and experiences, and the valuing of self-expansion over security.
-* *Non-Conformity*: refusal to conform to prevailing rules or practices.
-* *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
-* *Adaptability*: ability to adjust to new conditions.
-* *ThrillSeeking*: On the hunt for varied, novel, complex, and intense experiences and ready to risk physical, social, and financial safety.
-* *Need for Cognition*: engage and enjoy effortful cognitive endeavors.
-* *SocialCuriosity*: Desire to know what other people are thinking and doing through overt means (observing and probing questions) or covert means (listening into conversations or gathering  second-hand information).
-* *Professional Skepticism*: Characteristic of withholding a conclusion on a matter until sufficient evidence to form a basis for a reasonable conclusion has been obtained; Taking a step back from an issue, position, or posture and asking "does this make sense to me?"; Attitude to look below the surface and see if the numbers, situation, factors or people look out of place; Ability to ask questions beyond the obvious answer; Not placing inappropriate degree of trust in people, processes, controls and data; Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
-* *Assessment*: focus on self-evaluation and "doing the right thing."
-* *Grit*: perseverance and passion for long-term goals.
+###### The description of each personality dimension is at the bottom of this page.  *NonConformity* appears to be least important in this sample and has limited variability around the center of this scale. 
 
 ## Personality Traits and Years of Experience
 ##### Data analysis determined several Moderate correlations between Behavioral Traits and Years of Experience.
@@ -290,7 +279,7 @@ Correlation3 %>% filter (Correlation>.2 | Correlation <.2) %>%
 
 
 ## Self-Efficacy Correlations
-#####  Northrop Grumman Cybersecurity and non-cybersecurity Respondants rated Self-Efficacy (one's own ability) for the knowledge and abilty to work in the cybersecurity field.  
+#####  Northrop Grumman Cybersecurity and Non-cybersecurity respondents rated Self-Efficacy for the knowledge and ability to work in the cybersecurity field.  
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfd <- dfa %>% 
@@ -325,51 +314,89 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>%
 ```
 
 ##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
-##### Non-cybersecurity Professionals: Joyous Exploration, Stress Tolerance, and Locomotion correlated highest
+##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest
 
-### K Means Clustering
+## K Means Clustering I
 
-##### K means clustering identified three distinct personality profiles based on survey responses.  The chart below is faceted into two groups of personality dimensions based on deviation between clusters (high and low).  
+##### Results for four distinct personality profiles.  The chart below is faceted into clusters generally described by Kashdan et al. as:
+##### Cluster 1: "Empathizers"   
+##### Cluster 2: "Fascinated"
+##### Cluster 3: "Avoiders"
+##### Cluster 4: "Problem Solvers"
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 ###Cluster profiles
-dfcluster2a <- dfcluster2 %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)
+dfcluster2b <- dfclusterb %>% gather(JoyousExploration:ThrillSeeking, key=Category, value=Score)
+dfcluster2b$cluster<-as.factor(dfcluster2b$cluster)
+dfcluster3b<-dfcluster2b %>% group_by(Category, cluster) %>% summarise(Score=mean(Score))
+dfcluster3b$cluster<- paste("Cluster", dfcluster3b$cluster) 
+df_sd <- dfcluster3b %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(cluster_sd=if_else(sd>.075, "High", "Low"))
+dfcluster3b <- dfcluster3b %>% left_join(df_sd)
+dfcluster3b$cluster_sd <- factor(dfcluster3b$cluster_sd)
+#myclusters$cluster
+#myclusters$centers
+#myclustersb$size
+#fviz_cluster(myclusters, data = dfcluster)
+
+dfcluster3b %>% ungroup() %>% 
+     mutate(Category = fct_reorder(Category, -Score, .fun=mean)) %>% 
+     ggplot(aes (x=Category, y=Score)) + 
+     geom_col(aes(fill=Category)) +
+     scale_fill_manual(values = c("red", "orange", "blue", "green", "purple")) +
+        theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
+      xlab("") + ylim(0,1) + ylab("Raw Score Normalized") + facet_grid(.~cluster, scales="free_y") +
+    theme(axis.title.x=element_blank(),  axis.text.x=element_blank(),  axis.ticks.x=element_blank())
+```
+
+###### Read more here (see page 13-14): https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf
+
+## K Means Clustering II
+##### Results for three distinct personality profiles. The chart below is faceted into two groups of personality dimensions based on variability between clusters (high and low). 
+
+```{r message=FALSE, warning=FALSE,echo=FALSE}
+dfcluster2a <- dfclustera %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)
+
 dfcluster2a$cluster<-as.factor(dfcluster2a$cluster)
-dfcluster3<-dfcluster2a %>% group_by(Category, cluster) %>% summarise(Score=mean(Score))
-dfcluster3$cluster<- paste("Cluster", dfcluster3$cluster) 
-df_sd <- dfcluster3 %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(cluster_sd=if_else(sd>.075, "High", "Low"))
-dfcluster3 <- dfcluster3 %>% left_join(df_sd)
-dfcluster3$cluster_sd <- factor(dfcluster3$cluster_sd)
+
+dfcluster3a<-dfcluster2a %>% group_by(Category, cluster) %>% summarise(Score=mean(Score))
+
+dfcluster3a$cluster<- paste("Cluster", dfcluster3a$cluster) 
+
+df_sd <- dfcluster3a %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(cluster_sd=if_else(sd>.075, "High", "Low"))
+
+dfcluster3a <- dfcluster3a %>% left_join(df_sd)
+
+dfcluster3a$cluster_sd <- factor(dfcluster3a$cluster_sd)
+
 #myclusters$cluster
 #myclusters$centers
 #myclusters$size
 #fviz_cluster(myclusters, data = dfcluster)
 
-dfcluster3 %>% ungroup() %>% 
+dfcluster3a %>% ungroup() %>% 
      mutate(Category = fct_reorder(Category, Score, .fun=max)) %>% 
      ggplot(aes (x=Category, y=Score, group=cluster)) + 
      geom_point(aes(color=cluster), size=2) +
      geom_line(aes(linetype=cluster)) +
-     scale_linetype_manual(values = c("dashed", "blank", "blank"))+
+     scale_linetype_manual(values = c("blank", "blank", "dashed"))+
      scale_size_manual(values=c("3", "3")) +
-     scale_color_manual(values = c("green", "darkgray", "blue")) +
+     scale_color_manual(values = c("green", "blue", "darkgray")) +
      coord_flip() + 
-     #facet_grid(.~cluster)  +
      theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
-      xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized") + facet_grid(cluster_sd~., scales="free_y")
+    xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized") + facet_grid(cluster_sd~., scales="free_y")
 ```
 
-#####  The largest cluster, *Cluster 1*, generally scored high across all the dimensions.  
-##### Cluster 2, consists of respondants with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
-##### Cluster 3, consists of respondants with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
-##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
+#####  The largest cluster, *Cluster 3*, generally scored high across all the dimensions.  
+##### Cluster 1, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
+##### Cluster 2, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
+##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptability, Grit, Suspension of Judgement.
 
 ## Correlation Analysis of the Questionnaire's Personality Dimensions
 ##### Correlation coefficients are displayed and shaded based on strength.
 ##### Green boxes are drawn from Hierarchical Clustering of personality dimensions.
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
-corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
+corrplot(cor(dfclustera), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
 ```
 
 #### References:
@@ -377,7 +404,7 @@ corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=12
 ###### Cacioppo, J. T., Petty, R. E., and Kao, C. F. (1984). The efficient assessment of need for cognition. *Journal of Personality Assessment*, 48, 306-307.
 ###### Duckworth, A. L. & Quinn, P. D. (2009). Development and validation of the Short Grit Scale (Grit-S). *Journal of Personality Assessment*, 91(2), 166-174.
 ###### Hurt, R. K. (2010, May). Development of a Scale to Measure Professional Skepticism. *Auditing: A Journal of Practice and Theory*, 29(1), 149-171.
-###### Kashdan, T. B., Stiksma, M. C., Disabato, D. J., Mcknight, P. E.,, Bekier, J., Kaji, J., Lazarus, R. (2017, December). The Five-Dimension Curiosity Scale: Capturing the bandwidth of curisity and identifying four unique subgrups of curious people. *Journal for Research in Personality*, 73, 130-149.
+###### Kashdan, T. B., Stiksma, M. C., Disabato, D. J., Mcknight, P. E.,, Bekier, J., Kaji, J., Lazarus, R. (2017, December). The Five-Dimension Curiosity Scale: Capturing the bandwidth of curiosity and identifying four unique subgroups of curious people. *Journal for Research in Personality*, 73, 130-149.
 ###### Kruglanski, A. W., Thompson, E. P., Higgins, E. T., Atash, M. N., Pierro, A., Shah, J. Y., Spiegel, S. (2000, Nov). To "do the right thing" or to "just do it": Locomotion and assessment as distinct self-regulatory imperatives. *Journal of Personality and Social Psychology*, 79(5), 793-815.
 
 #### Definitions of Personality Dimensions
@@ -386,7 +413,7 @@ corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=12
 * *JoyousExploration*: Preference for new information and experiences, and the valuing of self-expansion over security.
 * *SelfConfidence*:  Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
 * *InterpersonalUnderstanding*:  Not placing inappropriate degree of trust in people, processes, controls and data.
-* *Locomotion*: decisiveness, task orentiation, intrinsic motivation to get the job done.
+* *Locomotion*: decisiveness, task orientation, intrinsic motivation to get the job done.
 * *SuspensionofJudgement*:  Characteristic of withholding a conclusion on a matter until sufficient evidence to form a basis for a reasonable conclusion has been obtained
 * *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
 * *Need for Cognition*: engage and enjoy effortful cognitive endeavors.
