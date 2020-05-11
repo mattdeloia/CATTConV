@@ -386,20 +386,21 @@ dfcluster3a %>% ungroup() %>%
     xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized") + facet_grid(cluster_sd~., scales="free_y")
 ```
 
-#####  The largest cluster, *Cluster 3*, generally scored high across all the dimensions.  
-##### Cluster 1, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
-##### Cluster 2, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
+#####  The largest cluster, *Cluster xx*, generally scored high across all the dimensions.  
+##### Cluster xx, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
+##### Cluster xx, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
 ##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptability, Grit, Suspension of Judgement.
 
-## Correlation Analysis of the Questionnaire's Personality Dimensions
-##### Correlation coefficients are displayed and shaded based on strength.
-##### Green boxes are drawn from Hierarchical Clustering of personality dimensions.
+## Correlation Analysis of Personality Dimensions
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 corrplot(cor(dfclustera), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
 ```
 
-#### References:
+##### Correlation coefficients are displayed and shaded based on strength.
+##### Green boxes are drawn from Hierarchical Clustering of personality dimensions.
+
+## References:
 ###### Adaptability and Conformity, International Personality Item Pool: A Scientific Collaboratory for the Development of Advanced Measures of Personality Traits and Other Individual Differences. http://ipip.ori.org/
 ###### Cacioppo, J. T., Petty, R. E., and Kao, C. F. (1984). The efficient assessment of need for cognition. *Journal of Personality Assessment*, 48, 306-307.
 ###### Duckworth, A. L. & Quinn, P. D. (2009). Development and validation of the Short Grit Scale (Grit-S). *Journal of Personality Assessment*, 91(2), 166-174.
