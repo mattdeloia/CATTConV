@@ -33,15 +33,17 @@ Northrop Grumman CATTConV Survey Results
 
 #### Personality Trait Boxplots
 
-##### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots. \#\#\#\#\#\# Boxplots graphically depict numerical data through their quartiles. The median value is labeled in **red** text. Outliers are plotted as black dots.
+##### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots.
 
-###### T Scores are used to display results in comparison to a reference. A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.
+##### Boxplots graphically depict numerical data through their quartiles. The median value is labeled in **red** text. Outliers are plotted as black dots.
 
-###### These T Scores were based on results published in peer reviewed literature noted in the References and data available from the Eugene-Springfield Community Sample at <https://dataverse.harvard.edu/dataverse/ESCS-Data>.
+##### T Scores are used to display results in comparison to a reference. A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.
+
+##### These T Scores were based on results published in peer reviewed literature noted in the References and data available from the Eugene-Springfield Community Sample at <https://dataverse.harvard.edu/dataverse/ESCS-Data>.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-###### The definition of each dimension, in order of their scores among Northrop Grumman’s Cybersecurity Professionals, is as follows:
+##### The definition of each dimension, in order of their scores among Northrop Grumman’s Cybersecurity Professionals, is as follows:
 
   - *StressTolerance*: Ability to cope win the anxiety inherent in
     confronting the new, unexpected, complex, mysterious, and obscure
@@ -84,7 +86,7 @@ Northrop Grumman CATTConV Survey Results
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-###### Positive Correlations with Experience
+##### Positive Correlations with Experience
 
   - *Self-Efficacy*: belief in one’s own ability to deal with a
     prospective situation in cybersecurity roles.
@@ -96,7 +98,7 @@ Northrop Grumman CATTConV Survey Results
     confronting the new, unexpected, complex, mysterious, and obscure
     events.
 
-###### Negative Correlations with Experience
+##### Negative Correlations with Experience
 
   - *Assessment*: focus on self-evaluation and “doing the right thing.”
   - *DeprivationSensitivity*: Seeking information to escape the tension
@@ -105,31 +107,33 @@ Northrop Grumman CATTConV Survey Results
 
 #### Self-Efficacy Correlations
 
-##### Respondants rated Self-Efficacy, one’s own ability to deal with a prospective situation, for the knowledge and abilty to work in the cybersecurity field.
+##### Northrop Grumman Cybersecurity and non-cybersecurity Respondants rated Self-Efficacy (one’s own ability) for the knowledge and abilty to work in the cybersecurity field.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-###### Northrop Grumman’s Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
+##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
 
-###### Others Northrol Grumman Employees (non-Cybersecurity): Joyous Exploration, Stress Tolerance, and Locomotion correlated highest
+##### Non-cybersecurity Professionals: Joyous Exploration, Stress Tolerance, and Locomotion correlated highest
 
 #### K Means Clustering
 
-##### K means clustering identified three distinct personality profiles based on respondant responses.
+##### K means clustering identified three distinct personality profiles based on respondant responses. The chart below is faceted into two groups of personality dimensions based on deviation between clusters (high and low).
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-###### The largest cluster, *Cluster 2*, generally scored high across all the dimensions.
+##### The largest cluster, *Cluster 1*, generally scored high across all the dimensions.
 
-###### Cluster 1, consists of respondants with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and significantly higher Suspension of Judgement.
+##### Cluster 2, consists of respondants with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
 
-###### Cluster 3, consists of respondants with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.
+##### Cluster 3, consists of respondants with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.
 
-###### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
+##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
 
 #### Correlation Analysis of the Questionnaire’s Personality Dimensions
 
-#### Correlation coefficients are displayed and colored based on strength. Green boxes are drawn around Hierarchical Clustering of personality dimensions based on responses to the personality questionnaire.
+#### Correlation coefficients are displayed and shaded based on strength.
+
+#### Green boxes are drawn from Hierarchical Clustering of personality dimensions.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
