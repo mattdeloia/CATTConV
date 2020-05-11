@@ -221,10 +221,10 @@ wordcloud(words = df_text2$word, freq = df_text2$freq, scale=c(3, 1), min.freq=1
 
 ### Cybersecurity Personality Trait Results
 #### Personality Trait Boxplots
-##### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots.  ###### Boxplots graphically depict numerical data through their quartiles.  The median value is labeled in **red** text.   Outliers are plotted as black dots.  
-
-###### T Scores are used to display results in comparison to a reference.  A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.  
-###### These T Scores were based on results published in peer reviewed literature noted in the References and data available from the Eugene-Springfield Community Sample at https://dataverse.harvard.edu/dataverse/ESCS-Data.
+##### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots.
+##### Boxplots graphically depict numerical data through their quartiles.  The median value is labeled in **red** text.   Outliers are plotted as black dots.  
+##### T Scores are used to display results in comparison to a reference.  A T Score of 50 represents the population average, with 40 and 60 representing one standard deviation higher and lower than the population, respectively.  
+##### These T Scores were based on results published in peer reviewed literature noted in the References and data available from the Eugene-Springfield Community Sample at https://dataverse.harvard.edu/dataverse/ESCS-Data.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>% 
@@ -240,7 +240,7 @@ df2b %>% filter (CyberPro== "Yes", Category != "SelfEfficacy")  %>%
      theme(legend.title=element_text(color="black", size=10), legend.position="blank") + ylim(25,75)
 ```
 
-###### The definition of each dimension, in order of their scores among Northrop Grumman's Cybersecurity Professionals, is as follows:
+##### The definition of each dimension, in order of their scores among Northrop Grumman's Cybersecurity Professionals, is as follows:
 * *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
 * *Locomotion*: decisiveness, task orentiation, intrinsic motivation to get the job done.
 * *JoyousExploration*: Preference for new information and experiences, and the valuing of self-expansion over security.
@@ -279,19 +279,19 @@ Correlation3 %>% filter (Correlation>.2 | Correlation <.2) %>%
      coord_flip() 
 ```
 
-###### Positive Correlations with Experience
+##### Positive Correlations with Experience
 * *Self-Efficacy*:  belief in one's own ability to deal with a prospective situation in cybersecurity roles.
 * *SelfConfidence*:  Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
 * *SelfDetermining*:  Taking a step back from an issue, position, or posture and asking "does this make sense to me?"
 * *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
 
-###### Negative Correlations with Experience
+##### Negative Correlations with Experience
 * *Assessment*: focus on self-evaluation and "doing the right thing."
 * *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
 
 
 #### Self-Efficacy Correlations
-#####  Respondants rated Self-Efficacy, one's own ability to deal with a prospective situation, for the knowledge and abilty to work in the cybersecurity field.  
+#####  Northrop Grumman Cybersecurity and non-cybersecurity Respondants rated Self-Efficacy (one's own ability) for the knowledge and abilty to work in the cybersecurity field.  
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfd <- dfa %>% 
@@ -325,12 +325,12 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>%
      coord_flip() + facet_grid(.~Group) + xlab("")
 ```
 
-###### Northrop Grumman's Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
-###### Others Northrol Grumman Employees (non-Cybersecurity): Joyous Exploration, Stress Tolerance, and Locomotion correlated highest
+##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
+##### Non-cybersecurity Professionals: Joyous Exploration, Stress Tolerance, and Locomotion correlated highest
 
 #### K Means Clustering
 
-##### K means clustering identified three distinct personality profiles based on respondant responses.
+##### K means clustering identified three distinct personality profiles based on respondant responses.  The chart below is faceted into two groups of personality dimensions based on deviation between clusters (high and low).  
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 ###Cluster profiles
@@ -338,7 +338,7 @@ dfcluster2a <- dfcluster2 %>% gather(SearchforKnowledge:Grit, key=Category, valu
 dfcluster2a$cluster<-as.factor(dfcluster2a$cluster)
 dfcluster3<-dfcluster2a %>% group_by(Category, cluster) %>% summarise(Score=mean(Score))
 dfcluster3$cluster<- paste("Cluster", dfcluster3$cluster) 
-df_sd <- dfcluster3 %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(cluster_sd=if_else(sd>.09, "High", "Low"))
+df_sd <- dfcluster3 %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(cluster_sd=if_else(sd>.075, "High", "Low"))
 dfcluster3 <- dfcluster3 %>% left_join(df_sd)
 dfcluster3$cluster_sd <- factor(dfcluster3$cluster_sd)
 #myclusters$cluster
@@ -351,22 +351,23 @@ dfcluster3 %>% ungroup() %>%
      ggplot(aes (x=Category, y=Score, group=cluster)) + 
      geom_point(aes(color=cluster), size=2) +
      geom_line(aes(linetype=cluster)) +
-     scale_linetype_manual(values = c("blank", "dashed", "blank"))+
+     scale_linetype_manual(values = c("dashed", "blank", "blank"))+
      scale_size_manual(values=c("3", "3")) +
      scale_color_manual(values = c("green", "darkgray", "blue")) +
      coord_flip() + 
      #facet_grid(.~cluster)  +
      theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
-      xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized")
+      xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized") + facet_grid(cluster_sd~., scales="free_y")
 ```
 
-######  The largest cluster, *Cluster 2*, generally scored high across all the dimensions.  
-###### Cluster 1, consists of respondants with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and significantly higher Suspension of Judgement.
-###### Cluster 3, consists of respondants with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
-###### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
+#####  The largest cluster, *Cluster 1*, generally scored high across all the dimensions.  
+##### Cluster 2, consists of respondants with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
+##### Cluster 3, consists of respondants with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
+##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
 
 #### Correlation Analysis of the Questionnaire's Personality Dimensions
-#### Correlation coefficients are displayed and colored based on strength.  Green boxes are drawn around Hierarchical Clustering of personality dimensions based on responses to the personality questionnaire.
+#### Correlation coefficients are displayed and shaded based on strength.
+#### Green boxes are drawn from Hierarchical Clustering of personality dimensions.
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 corrplot(cor(dfcluster), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
