@@ -321,8 +321,8 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>%
 ##### Results for four distinct personality profiles.  The chart below is faceted into clusters generally described by Kashdan et al. as:
 ##### Cluster 1: "Empathizers"   
 ##### Cluster 2: "Fascinated"
-##### Cluster 3: "Avoiders"
-##### Cluster 4: "Problem Solvers"
+##### Cluster 3: "Problem Solvers"
+##### Cluster 4: "Avoiders"
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 ###Cluster profiles
@@ -378,17 +378,17 @@ dfcluster3a %>% ungroup() %>%
      ggplot(aes (x=Category, y=Score, group=cluster)) + 
      geom_point(aes(color=cluster), size=2) +
      geom_line(aes(linetype=cluster)) +
-     scale_linetype_manual(values = c("blank", "blank", "dashed"))+
+     scale_linetype_manual(values = c("blank", "dashed", "blank"))+
      scale_size_manual(values=c("3", "3")) +
-     scale_color_manual(values = c("green", "blue", "darkgray")) +
+     scale_color_manual(values = c("green", "darkgray", "blue")) +
      coord_flip() + 
      theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
     xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized") + facet_grid(cluster_sd~., scales="free_y")
 ```
 
-#####  The largest cluster, *Cluster xx*, generally scored high across all the dimensions.  
-##### Cluster xx, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
-##### Cluster xx, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
+#####  The largest cluster, *Cluster 2*, generally scored high across all the dimensions.  
+##### Cluster 3, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
+##### Cluster 1, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
 ##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptability, Grit, Suspension of Judgement.
 
 ## Correlation Analysis of Personality Dimensions
