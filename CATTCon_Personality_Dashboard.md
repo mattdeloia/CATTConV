@@ -3,35 +3,31 @@ Northrop Grumman CATTConV Survey Results
 
 #### 63 Northrop Grumman Cybersecurity Professionals participated in this data collection and 39 other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
 
-## Demographic Information
-
-### Cyberseucrity Particpants Education Column Plot
+## Cyberseucrity Particpants Education Column Plot
 
 ##### Highest degree of Northrop Grumman Cybersecuirty Professionals. 76 percent have degrees in Computer Science or CS related fields.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-### Experience Histogram
+## Experience Histogram
 
 ##### Northrop Grumman Cybersecuirty Professionals reported, on average, 11 years years of experience.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-### Certifications Word Cloud
+## Certifications Word Cloud
 
 ##### Northrop Grumman Cybersecurity Professionals reported, on average, 2-3 certifications.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-### Hobbies Word Cloud.
+## Hobbies Word Cloud.
 
 ##### Hobbies reported by Northrop Grumman Cybersecurity Professionals.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-## Cybersecurity Personality Trait Results
-
-### Personality Trait Boxplots
+## Personality Trait Boxplots
 
 ##### Northrop Grumman Cybersecurity professionals are displayed in the **green** boxplots.
 
@@ -80,7 +76,7 @@ Northrop Grumman CATTConV Survey Results
   - *Assessment*: focus on self-evaluation and “doing the right thing.”
   - *Grit*: perseverance and passion for long-term goals.
 
-### Personality Traits and Years of Experience
+## Personality Traits and Years of Experience
 
 ##### Data analysis determined several Moderate correlations between Behavioral Traits and Years of Experience.
 
@@ -105,7 +101,7 @@ Northrop Grumman CATTConV Survey Results
     of not knowing something. Intellectually engaged to think about
     abstract or complex ideas and solve problems.
 
-### Self-Efficacy Correlations
+## Self-Efficacy Correlations
 
 ##### Northrop Grumman Cybersecurity and non-cybersecurity Respondants rated Self-Efficacy (one’s own ability) for the knowledge and abilty to work in the cybersecurity field.
 
@@ -129,7 +125,7 @@ Northrop Grumman CATTConV Survey Results
 
 ##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptabiliy, Grit, Suspension of Judgement.
 
-### Correlation Analysis of the Questionnaire’s Personality Dimensions
+## Correlation Analysis of the Questionnaire’s Personality Dimensions
 
 ##### Correlation coefficients are displayed and shaded based on strength.
 
