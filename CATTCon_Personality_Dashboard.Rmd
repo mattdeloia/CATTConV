@@ -155,10 +155,10 @@ dfclusterb <- dplyr::rename(dfclusterb, cluster = `myclustersb$cluster`)
 #### `r n_CyberPro$n` Northrop Grumman Cybersecurity Professionals participated in this data collection and `r n_Not_CyberPro$n` other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
 ##### Research aims: 
 * Identify personality traits that are common among Northrop Grumman's Cybersecurity Professionals
-* Determine raw score distributions or density functions of 17 select personality dimensions; understand variability among those in cybersecurity work roles
-* Verify factor analysis of 17 measures (degree individual questions are measuring the intended personality trait)
-* Identify potential components (personality traits) to a predictive model of latent talent for cybersecurity work roles 
-* Collect respondent feedback on the personality questionnaire 
+* Determine raw score distributions and density functions for 17 personality dimensions; understand variability among cybersecurity workers
+* Verify factor analysis for 17 personality measures (i.e. degree individual questions are measuring the intended personality trait)
+* Identify potential components (personality traits) for a predictive model of latent talent for cybersecurity work roles 
+* Refine on the personality questionnaire 
 
 ##### Results and analysis from this data collection will also assist Northrop Grumman Project Work in support of Army Research and the Army Cyber Proponent.
 
@@ -324,43 +324,8 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>%
 ##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
 ##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest
 
-## K Means Clustering I (Curiosity Dimensions)
-
-##### Personality clustering results from respondent data for Curiosity (5 personality dimensions).  The chart below is faceted into four clusters generally described by Kashdan et al. as:
-##### Cluster 1: "Empathizers" (`r 100*round(30/102, 2)`%)   
-##### Cluster 2: "Fascinated" (`r 100*round(27/102,2)`%) 
-##### Cluster 3: "Problem Solvers" (`r 100*round(25/102,2)`%) 
-##### Cluster 4: "Avoiders" (`r 100*round(20/102,2)`%) 
-
-```{r message=FALSE, warning=FALSE,echo=FALSE}
-###Cluster profiles
-dfcluster2b <- dfclusterb %>% gather(JoyousExploration:ThrillSeeking, key=Category, value=Score)
-dfcluster2b$cluster<-as.factor(dfcluster2b$cluster)
-dfcluster3b<-dfcluster2b %>% group_by(Category, cluster) %>% summarise(Score=mean(Score))
-dfcluster3b$cluster<- paste("Cluster", dfcluster3b$cluster) 
-df_sd <- dfcluster3b %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(cluster_sd=if_else(sd>.075, "High", "Low"))
-dfcluster3b <- dfcluster3b %>% left_join(df_sd)
-dfcluster3b$cluster_sd <- factor(dfcluster3b$cluster_sd)
-#myclusters$cluster
-#myclusters$centers
-#myclustersb$size
-#fviz_cluster(myclusters, data = dfcluster)
-
-dfcluster3b %>% ungroup() %>% 
-     mutate(Category = fct_reorder(Category, -Score, .fun=mean)) %>% 
-     ggplot(aes (x=Category, y=Score)) + 
-     geom_col(aes(fill=Category)) +
-     scale_fill_manual(values = c("red", "orange", "blue", "green", "purple")) +
-        theme(legend.title= element_text(color="white", size=0), legend.position = "top") +
-      xlab("") + ylim(0,1) + ylab("Raw Score Normalized") + facet_grid(.~cluster, scales="free_y") +
-    theme(axis.title.x=element_blank(),  axis.text.x=element_blank(),  axis.ticks.x=element_blank())
-```
-
-##### Read a description of these clusters on pages 13-14 of the following published article:
-###### https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf
-
-## K Means Clustering II (All Personality Dimensions)
-##### Personality dimensions were faceted based on variability among clusters (personality dimensions with high variability vs. personality dimensions with low variability). 
+## K Means Clustering (All Personality Dimensions)
+##### Personality dimensions were faceted based on variability among clusters (9 personality dimensions with high variability are displayed below). 
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfcluster2a <- dfclustera %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)
@@ -371,33 +336,34 @@ dfcluster3a<-dfcluster2a %>% group_by(Category, cluster) %>% summarise(Score=mea
 
 dfcluster3a$cluster<- paste("Cluster", dfcluster3a$cluster) 
 
-df_sd <- dfcluster3a %>% group_by(Category) %>% summarise(sd=sd(Score)) %>% mutate(cluster_sd=if_else(sd>.075, "High", "Low"))
+df_sd <- dfcluster3a %>% group_by(Category) %>% summarise(sd=sd(Score), mean=mean(Score)) %>% mutate(cluster_sd=if_else(sd>.075, "High", "Low"))
 
-dfcluster3a <- dfcluster3a %>% left_join(df_sd)
+dfcluster3a <- dfcluster3a %>% left_join(df_sd) %>% mutate(score=if_else((mean-Score)>.05, "Deviation", "Normal"))
 
-dfcluster3a$cluster_sd <- factor(dfcluster3a$cluster_sd)
+dfcluster3a$cluster_sd <- factor(dfcluster3a$cluster_sd) 
 
 #myclustersa$cluster
 #myclustersa$centers
 #myclustersa$size
 #fviz_cluster(myclusters, data = dfcluster)
 
-dfcluster3a %>% ungroup() %>% 
+dfcluster3a %>% ungroup() %>% filter(cluster_sd=="High") %>% 
      mutate(Category = fct_reorder(Category, Score, .fun=max)) %>% 
      ggplot(aes (x=Category, y=Score, group=cluster)) + 
-     geom_point(aes(color=cluster), size=2) +
-     geom_line(aes(linetype=cluster)) +
-     scale_linetype_manual(values = c("blank", "dashed", "blank"))+
-     scale_size_manual(values=c("3", "3")) +
-     scale_color_manual(values = c("green", "darkgray", "blue")) +
+     geom_col(aes(fill=score), size=2) +
+     scale_fill_manual(values = c("green", "darkgray")) +
      coord_flip() + 
-     theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
-    xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized") + facet_grid(cluster_sd~., scales="free_y")
+     geom_hline(yintercept = .5, color="red", linetype="dashed") +
+     theme(legend.title= element_text(color="blue", size=10), legend.position = "blank") +
+    xlab("") + ylab("Cluster Average Score (Normalized)") + facet_grid(.~cluster)  
+  
 ```
 
 #####  The largest cluster, *Cluster 2* (`r 100*round(44/102,2)`%), generally reports high scores across all the dimensions and appears to resemble "Problem Solvers" and "Fascinated" personality profiles.  
-##### *Cluster 1* (`r 100*round(28/102,2)`%) and *Cluster 3* (`r 100*round(30/102,2)`%) , consists of respondents with lower scores on many dimensions and resemble "Avoiders" and "Empathizers", respectively.
-##### Low variability was observed between personality clusters in many dimensions.
+##### *Cluster 1* (`r 100*round(28/102,2)`%) and *Cluster 3* (`r 100*round(30/102,2)`%) , consists of respondents with lower scores on many dimensions.  Cluster 1 may best resemble "Avoiders" and and Cluster 3 "Empathizers".
+
+##### Read a description of Problem Solvers, Fascinated, Avoiders, and Empathizers on pages 13-14 of the following article:
+###### https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf
 
 ## Correlation Analysis of Personality Dimensions
 
