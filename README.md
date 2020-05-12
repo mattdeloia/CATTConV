@@ -78,9 +78,9 @@ Northrop Grumman CATTConV Survey Results
 
 ##### Cluster 2: “Fascinated”
 
-##### Cluster 3: “Avoiders”
+##### Cluster 3: “Problem Solvers”
 
-##### Cluster 4: “Problem Solvers”
+##### Cluster 4: “Avoiders”
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
@@ -92,11 +92,11 @@ Northrop Grumman CATTConV Survey Results
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-##### The largest cluster, *Cluster xx*, generally scored high across all the dimensions.
+##### The largest cluster, *Cluster 2*, generally scored high across all the dimensions.
 
-##### Cluster xx, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
+##### Cluster 3, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
 
-##### Cluster xx, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.
+##### Cluster 1, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.
 
 ##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptability, Grit, Suspension of Judgement.
 
