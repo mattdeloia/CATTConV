@@ -1,7 +1,7 @@
 Northrop Grumman CATTConV Survey Results
 ================
 
-#### 63 Northrop Grumman Cybersecurity Professionals participated in this data collection and 39 other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
+#### 63 Northrop Grumman Cybersecurity Professionals and 39 other Northrop Grumman Professionals (ex. Program Managers, Systems Engineers) participated in this data collection.
 
 ##### Research aims:
 

@@ -152,7 +152,7 @@ dfclusterb <- data.frame(dfclusterb) %>% cbind(myclustersb$cluster)
 dfclusterb <- dplyr::rename(dfclusterb, cluster = `myclustersb$cluster`) 
 ```
 
-#### `r n_CyberPro$n` Northrop Grumman Cybersecurity Professionals participated in this data collection and `r n_Not_CyberPro$n` other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
+#### `r n_CyberPro$n` Northrop Grumman Cybersecurity Professionals and `r n_Not_CyberPro$n` other Northrop Grumman Professionals (ex. Program Managers, Systems Engineers) participated in this data collection.
 ##### Research aims: 
 * Identify personality traits that are common among Northrop Grumman's Cybersecurity Professionals
 * Determine raw score distributions and density functions for 17 personality dimensions; understand variability among cybersecurity workers
