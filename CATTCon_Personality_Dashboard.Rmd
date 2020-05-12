@@ -352,7 +352,7 @@ dfcluster3b %>% ungroup() %>%
 ###### https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf
 
 ## K Means Clustering II (All Personality Dimensions)
-##### Personality clustering results faceted based on variability in mean scores among the clusters (dimensions with high variability vs. dimensions with low variability). 
+##### Personality dimensions were faceted based on variability among clusters (personality dimensions with high variability vs. personality dimensions with low variability). 
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfcluster2a <- dfclustera %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)

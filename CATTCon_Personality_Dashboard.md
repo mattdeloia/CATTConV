@@ -90,7 +90,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## K Means Clustering II (All Personality Dimensions)
 
-##### Personality clustering results faceted based on variability in mean scores among the clusters (dimensions with high variability vs. dimensions with low variability).
+##### Personality dimensions were faceted based on variability among clusters (personality dimensions with high variability vs. personality dimensions with low variability).
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
