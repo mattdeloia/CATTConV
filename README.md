@@ -3,6 +3,21 @@ Northrop Grumman CATTConV Survey Results
 
 #### 63 Northrop Grumman Cybersecurity Professionals participated in this data collection and 39 other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
 
+##### Research aims:
+
+  - Identify personality traits that are common among Northrop Grumman’s
+    Cybersecurity Professionals
+  - Determine raw score distributions or density functions of 17 select
+    personality dimensions; understand variability among those in
+    cybersecurity work roles
+  - Verify factor analysis of 17 measures (degree individual questions
+    are measuring the intended personality trait)
+  - Identify potential components (personality traits) to a predictive
+    model of latent talent for cybersecurity work roles
+  - Collect respondent feedback on the personality questionnaire
+
+##### Results and analysis from this data collection will also assist Northrop Grumman Project Work in support of Army Research and the Army Cyber Proponent.
+
 ## Education Column Plot
 
 ##### Highest degree of Northrop Grumman Cybersecurity Professionals. 76 percent have degrees in Computer Science or CS related fields.
@@ -90,7 +105,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## K Means Clustering II (All Personality Dimensions)
 
-##### Personality clustering results faceted based on variability in mean scores among the clusters (dimensions with high variability vs. dimensions with low variability).
+##### Personality dimensions were faceted based on variability among clusters (personality dimensions with high variability vs. personality dimensions with low variability).
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
