@@ -7,14 +7,14 @@ Northrop Grumman CATTConV Survey Results
 
   - Identify personality traits that are common among Northrop Grumman’s
     Cybersecurity Professionals
-  - Determine raw score distributions or density functions of 17 select
-    personality dimensions; understand variability among those in
-    cybersecurity work roles
-  - Verify factor analysis of 17 measures (degree individual questions
-    are measuring the intended personality trait)
-  - Identify potential components (personality traits) to a predictive
+  - Determine raw score distributions and density functions for 17
+    personality dimensions; understand variability among cybersecurity
+    workers
+  - Verify factor analysis for 17 personality measures (i.e. degree
+    individual questions are measuring the intended personality trait)
+  - Identify potential components (personality traits) for a predictive
     model of latent talent for cybersecurity work roles
-  - Collect respondent feedback on the personality questionnaire
+  - Refine on the personality questionnaire
 
 ##### Results and analysis from this data collection will also assist Northrop Grumman Project Work in support of Army Research and the Army Cyber Proponent.
 
@@ -85,39 +85,23 @@ Northrop Grumman CATTConV Survey Results
 
 ##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest
 
-## K Means Clustering I (Curiosity Dimensions)
+## K Means Clustering (All Personality Dimensions)
 
-##### Personality clustering results from respondent data for Curiosity (5 personality dimensions). The chart below is faceted into four clusters generally described by Kashdan et al. as:
-
-##### Cluster 1: “Empathizers” (29%)
-
-##### Cluster 2: “Fascinated” (26%)
-
-##### Cluster 3: “Problem Solvers” (25%)
-
-##### Cluster 4: “Avoiders” (20%)
+##### Personality dimensions were faceted based on variability among clusters (9 personality dimensions with high variability are displayed below).
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-##### Read a description of these clusters on pages 13-14 of the following published article:
+##### The largest cluster, *Cluster 2* (43%), generally reports high scores across all the dimensions and appears to resemble “Problem Solvers” and “Fascinated” personality profiles.
+
+##### *Cluster 1* (27%) and *Cluster 3* (29%) , consists of respondents with lower scores on many dimensions. Cluster 1 may best resemble “Avoiders” and and Cluster 3 “Empathizers”.
+
+##### Read a description of Problem Solvers, Fascinated, Avoiders, and Empathizers on pages 13-14 of the following article:
 
 ###### <https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf>
 
-## K Means Clustering II (All Personality Dimensions)
-
-##### Personality dimensions were faceted based on variability among clusters (personality dimensions with high variability vs. personality dimensions with low variability).
-
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
-
-##### The largest cluster, *Cluster 2* (43%), generally reports high scores across all the dimensions and appears to resemble “Problem Solvers” and “Fascinated” personality profiles.
-
-##### *Cluster 1* (27%) and *Cluster 3* (29%) , consists of respondents with lower scores on many dimensions and resemble “Avoiders” and “Empathizers”, respectively.
-
-##### Low variability was observed between personality clusters in many dimensions.
-
 ## Correlation Analysis of Personality Dimensions
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ##### Correlation coefficients are displayed and shaded. Green boxes are drawn from the results of hierarchical clustering of these personality dimensions. For example, respondent data suggests “Search for Knowledge” and “Joyous Exploration” measure the same trait.
 
