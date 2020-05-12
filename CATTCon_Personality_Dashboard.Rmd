@@ -154,7 +154,7 @@ dfclusterb <- dplyr::rename(dfclusterb, cluster = `myclustersb$cluster`)
 
 #### `r n_CyberPro$n` Northrop Grumman Cybersecurity Professionals participated in this data collection and `r n_Not_CyberPro$n` other Professionals (ex. Northrop Grumman Program Managers, Systems Engineers).
 
-## Cybersecurity Participants Education Column Plot
+## Education Column Plot
 ##### Highest degree of Northrop Grumman Cybersecurity Professionals.  `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or CS related fields. 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
@@ -227,8 +227,8 @@ wordcloud(words = df_text2$word, freq = df_text2$freq, scale=c(3, 1), min.freq=1
           colors=brewer.pal(3, "Dark2" ))
 ```
 
-## Distribution of Personality Raw Scores
-##### Northrop Grumman Cybersecurity professionals raw scores are displayed as density plots for 17 personality dimensions.
+## Personality Trait Raw Scores
+##### Northrop Grumman Cybersecurity Professionals' trait raw scores are displayed as density plots.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 df2a %>% filter(Dimension != "SelfEfficacy", CyberPro=="Yes") %>% 
@@ -240,10 +240,10 @@ df2a %>% filter(Dimension != "SelfEfficacy", CyberPro=="Yes") %>%
 
 ```
 
-###### The description of each personality dimension is at the bottom of this page.  *NonConformity* appears to be least important in this sample and has limited variability around the center of this scale. 
+##### The description of each personality dimension is at the bottom of this page.  *NonConformity* appears to be least important in this sample and has limited variability around the center of this scale. 
 
-## Personality Traits and Years of Experience
-##### Data analysis determined several Moderate correlations between Behavioral Traits and Years of Experience.
+## Personality Traits and Experience Correlations
+##### Data analysis determined several moderate correlations (0.3 - 0.5) between behavioral traits and years of experience.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 dfc <- dfa %>% 
@@ -267,19 +267,19 @@ Correlation3 %>% filter (Correlation>.2 | Correlation <.2) %>%
      coord_flip() 
 ```
 
-##### Positive Correlations with Experience
+##### Positive Correlations with Years of Experience
 * *Self-Efficacy*:  belief in one's own ability to deal with a prospective situation in cybersecurity roles.
 * *SelfConfidence*:  Someone who would be unafraid to pursue a resolution when he/she uncovers a questionable activity.
 * *SelfDetermining*:  Taking a step back from an issue, position, or posture and asking "does this make sense to me?"
 * *StressTolerance*: Ability to cope win the anxiety inherent in confronting the new, unexpected, complex, mysterious, and obscure events.
 
-##### Negative Correlations with Experience
+##### Negative Correlations with Years of Experience
 * *Assessment*: focus on self-evaluation and "doing the right thing."
 * *DeprivationSensitivity*: Seeking information to escape the tension of not knowing something.  Intellectually engaged to think about abstract or complex ideas and solve problems.
 
 
 ## Self-Efficacy Correlations
-#####  Northrop Grumman Cybersecurity and Non-cybersecurity respondents rated Self-Efficacy for the knowledge and ability to work in the cybersecurity field.  
+#####  Northrop Grumman Cybersecurity and Non-cybersecurity respondents rated self-efficacy for "the level of knowledge" and "the ability" to work in the cybersecurity field".  Several personality dimensions display moderate positive correlations.  
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfd <- dfa %>% 
@@ -316,13 +316,13 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>%
 ##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
 ##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest
 
-## K Means Clustering I
+## K Means Clustering I (Curiosity Dimensions)
 
-##### Results for four distinct personality profiles.  The chart below is faceted into clusters generally described by Kashdan et al. as:
-##### Cluster 1: "Empathizers"   
-##### Cluster 2: "Fascinated"
-##### Cluster 3: "Problem Solvers"
-##### Cluster 4: "Avoiders"
+##### Personality clustering results from respondent data for Curiosity (5 personality dimensions).  The chart below is faceted into four clusters generally described by Kashdan et al. as:
+##### Cluster 1: "Empathizers" (`r 100*round(30/102, 2)`%)   
+##### Cluster 2: "Fascinated" (`r 100*round(27/102,2)`%) 
+##### Cluster 3: "Problem Solvers" (`r 100*round(25/102,2)`%) 
+##### Cluster 4: "Avoiders" (`r 100*round(20/102,2)`%) 
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 ###Cluster profiles
@@ -343,15 +343,16 @@ dfcluster3b %>% ungroup() %>%
      ggplot(aes (x=Category, y=Score)) + 
      geom_col(aes(fill=Category)) +
      scale_fill_manual(values = c("red", "orange", "blue", "green", "purple")) +
-        theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
+        theme(legend.title= element_text(color="white", size=0), legend.position = "top") +
       xlab("") + ylim(0,1) + ylab("Raw Score Normalized") + facet_grid(.~cluster, scales="free_y") +
     theme(axis.title.x=element_blank(),  axis.text.x=element_blank(),  axis.ticks.x=element_blank())
 ```
 
-###### Read more here (see page 13-14): https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf
+##### Read a description of these clusters on pages 13-14 of the following published article:
+###### https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf
 
-## K Means Clustering II
-##### Results for three distinct personality profiles. The chart below is faceted into two groups of personality dimensions based on variability between clusters (high and low). 
+## K Means Clustering II (All Personality Dimensions)
+##### Personality clustering results faceted based on variability in mean scores among the clusters (dimensions with high variability vs. dimensions with low variability). 
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfcluster2a <- dfclustera %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)
@@ -368,9 +369,9 @@ dfcluster3a <- dfcluster3a %>% left_join(df_sd)
 
 dfcluster3a$cluster_sd <- factor(dfcluster3a$cluster_sd)
 
-#myclusters$cluster
-#myclusters$centers
-#myclusters$size
+#myclustersa$cluster
+#myclustersa$centers
+#myclustersa$size
 #fviz_cluster(myclusters, data = dfcluster)
 
 dfcluster3a %>% ungroup() %>% 
@@ -386,10 +387,9 @@ dfcluster3a %>% ungroup() %>%
     xlab("") + ylim(0.4,1) + ylab("Raw Score Normalized") + facet_grid(cluster_sd~., scales="free_y")
 ```
 
-#####  The largest cluster, *Cluster 2*, generally scored high across all the dimensions.  
-##### Cluster 3, consists of respondents with significantly lower scores on Stress Tolerance, Self Determining, Thrill Seeking and higher Suspension of Judgement.
-##### Cluster 1, consists of respondents with significantly lower scores on Social Curiosity, Interpersonal Understanding, Thrill Seeking, Deprivation Sensitivity, and Assessment.  
-##### Little variability was observed between personality clusters in the following dimensions: Non-Conformity, Search for Knowledge, Joyous Exploration, Questioning Mind, Locomotion, Adaptability, Grit, Suspension of Judgement.
+#####  The largest cluster, *Cluster 2* (`r 100*round(44/102,2)`%), generally reports high scores across all the dimensions and appears to resemble "Problem Solvers" and "Fascinated" personality profiles.  
+##### *Cluster 1* (`r 100*round(28/102,2)`%) and *Cluster 3* (`r 100*round(30/102,2)`%) , consists of respondents with lower scores on many dimensions and resemble "Avoiders" and "Empathizers", respectively.
+##### Low variability was observed between personality clusters in many dimensions.
 
 ## Correlation Analysis of Personality Dimensions
 
@@ -397,8 +397,7 @@ dfcluster3a %>% ungroup() %>%
 corrplot(cor(dfclustera), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
 ```
 
-##### Correlation coefficients are displayed and shaded based on strength.
-##### Green boxes are drawn from Hierarchical Clustering of personality dimensions.
+##### Correlation coefficients are displayed and shaded.  Green boxes are drawn from the results of hierarchical clustering of these personality dimensions.  For example, respondent data suggests "Search for Knowledge" and "Joyous Exploration" measure the same trait.
 
 ## References:
 ###### Adaptability and Conformity, International Personality Item Pool: A Scientific Collaboratory for the Development of Advanced Measures of Personality Traits and Other Individual Differences. http://ipip.ori.org/
