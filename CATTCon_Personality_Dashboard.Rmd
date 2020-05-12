@@ -325,7 +325,7 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>%
 ##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest
 
 ## K Means Clustering (All Personality Dimensions)
-##### Personality dimensions were faceted based on variability among clusters (9 personality dimensions with high variability are displayed below). 
+##### Three personality clusters resulted from the respondent data.  Highlighted in green are personality dimensions with greatest variability that serve as the defining features of the cluster. 
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfcluster2a <- dfclustera %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)

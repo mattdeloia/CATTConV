@@ -87,7 +87,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## K Means Clustering (All Personality Dimensions)
 
-##### Personality dimensions were faceted based on variability among clusters (9 personality dimensions with high variability are displayed below).
+##### Three personality clusters resulted from the respondent data. Highlighted in green are personality dimensions with greatest variability that serve as the defining features of the cluster.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
