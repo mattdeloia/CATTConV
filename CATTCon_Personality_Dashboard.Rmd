@@ -25,10 +25,12 @@ library(randomForest)
 
 
 df<- read_excel("CATTConSurveyResults.xls")
+dfx <- read_excel("CATTConSurveyResults_ControlData.xlsx")
 
 #Add id to each row
 df<-df %>% drop_na(CyberPro)
 df<- df %>% mutate("ID"=rownames(df))
+dfx$ID <- as.character(dfx$ID)
 
 #Reverse Scores for select columnn
 columnsToReverse <-  c('Skepticism13', 'Skepticism14', 'Skepticism15', 'Skepticism16','Skepticism17', 'Skepticism21', 'Skepticism22', 'Skepticism24', 'Curiosity11','Curiosity12','Curiosity13','Curiosity14', 'Curiosity15', 'NeedCognition3','NeedCognition4', 'NeedCognition5', 'NeedCognition7', 'NeedCognition9', 'NeedCognition12', 'NeedCognition16', 'NeedCognition17', 'SelfRegulation6', 'SelfRegulation9', 'SelfRegulation13', 'SelfRegulation17', 'SelfRegulation23', 'NonConformity2', 'NonConformity4', 'NonConformity5', 'NonConformity7', 'NonConformity9', 'Adaptability2', 'Adaptability5', 'Adaptability6','Adaptability7','Adaptability8', 'Grit1', 'Grit3', 'Grit5', 'Grit6')
@@ -55,7 +57,9 @@ dfa <- df %>% group_by(ID) %>%
      "Adaptability"= (sum (Adaptability1,Adaptability2,Adaptability3,Adaptability5,Adaptability6,Adaptability7,Adaptability8) / 42) , #Removed Adaptability4
      "Grit" = (sum (Grit1,Grit3,Grit4,Grit5,Grit6,Grit7,Grit8)/ 42), #Removed Grit 2
      "SelfEfficacy" = (sum (SelfEfficacy1, SelfEfficacy2)/ 14 )) %>%
-          select (ID, CyberPro:OtherTraits, SearchforKnowledge:SelfEfficacy) 
+          select (ID, CyberPro:OtherTraits, SearchforKnowledge:SelfEfficacy)
+
+dfa2 <- bind_rows(dfa, dfx)
 
 #Scoring and development of T Scores based on published norms
 dfb <- df %>% group_by(ID) %>%  
@@ -67,7 +71,8 @@ dfb <- df %>% group_by(ID) %>%
      "ThrillSeeking" = (50+10*((sum (Curiosity21,Curiosity22,Curiosity23,Curiosity24,Curiosity25) / 5)-(3.88*6/7))/(1.32*6/7)) , 
      "NeedforCognition" = (50+10*((sum(NeedCognition1,NeedCognition2,NeedCognition3,NeedCognition4,NeedCognition5,NeedCognition6,NeedCognition7,NeedCognition8,NeedCognition9,NeedCognition10,NeedCognition11,NeedCognition12,NeedCognition13,NeedCognition14,NeedCognition15,NeedCognition16,NeedCognition17,NeedCognition18) / 18)-(3.64*6/5))/(.695*6/7)), 
      "Locomotion" = (50+10*((sum(SelfRegulation1,SelfRegulation2,SelfRegulation3,SelfRegulation4,SelfRegulation5,SelfRegulation6,SelfRegulation7,SelfRegulation8,SelfRegulation9,SelfRegulation10,SelfRegulation11, SelfRegulation12) / 12 )-(4.14*6/6))/.69) , 
-     "Assessment" = (50+10*((sum(`SelfRegulation13`,SelfRegulation14,SelfRegulation15,SelfRegulation16,SelfRegulation17,SelfRegulation18,SelfRegulation19,SelfRegulation20,SelfRegulation21,SelfRegulation22,SelfRegulation23,SelfRegulation24) / 12)-(3.92*6/6))/.75),      "NonConformity"= (50+10*((sum(NonConformity1,NonConformity2,NonConformity3,NonConformity4,NonConformity5,NonConformity6,NonConformity7,NonConformity8,NonConformity9,NonConformity10) / 10)-(2.51*6/5))/(.470*6/5)) , 
+     "Assessment" = (50+10*((sum(`SelfRegulation13`,SelfRegulation14,SelfRegulation15,SelfRegulation16,SelfRegulation17,SelfRegulation18,SelfRegulation19,SelfRegulation20,SelfRegulation21,SelfRegulation22,SelfRegulation23,SelfRegulation24) / 12)-(3.92*6/6))/.75),      
+     "NonConformity"= (50+10*((sum(NonConformity1,NonConformity2,NonConformity3,NonConformity4,NonConformity5,NonConformity6,NonConformity7,NonConformity8,NonConformity9,NonConformity10) / 10)-(2.51*6/5))/(.470*6/5)) , 
      "Adaptability"= (50+10*((sum (Adaptability1,Adaptability2,Adaptability3,Adaptability4,Adaptability5,Adaptability6,Adaptability7,Adaptability8) / 8)-(3.60*6/5))/(.539*6/5)),
      "Grit" = (50+10*((sum (Grit1,Grit2,Grit3,Grit4,Grit5,Grit6,Grit7,Grit8)/ 8)-(3.65*6/5))/(.73*6/5))  ) %>%
           select (ID, CyberPro:OtherTraits, Skepticism:Grit) 
@@ -81,6 +86,9 @@ df2a <- dfa %>%
           if_else(Dimension == "Locomotion", "Locomotion",
           if_else (Dimension=="Assessment", "Assessment",
           if_else(Dimension == "Adaptability", "Adaptability", if_else(Dimension == "NonConformity", "NonConformity", if_else(Dimension=="Grit", "Grit", "SelfEfficacy" )))))))))
+
+df2a2 <- dfa2 %>% 
+     gather(SearchforKnowledge:SelfEfficacy, key=Dimension, value=Score)
 
 df2b <- dfb %>% 
      gather(Skepticism:Grit, key=Dimension, value=Score) %>% 
@@ -160,7 +168,7 @@ dfclusterb <- dplyr::rename(dfclusterb, cluster = `myclustersb$cluster`)
 * Identify potential components to a predictive model of latent talent for cybersecurity work roles 
 * Refine the personality questionnaire 
 
-##### Results and analysis from this data collection will also assist Northrop Grumman Project Work in support of Army Research and the Army Cyber Proponent.
+##### Results and analysis from this data collection will assist Northrop Grumman Project Work in support of the Army Research Institute and the Army's Cyber Proponent.
 
 ## Education Column Plot
 ##### Highest degree of Northrop Grumman Cybersecurity Professionals.  `r round(df_ed3$n, 2)*100` percent have degrees in Computer Science or CS related fields. 
@@ -236,15 +244,17 @@ wordcloud(words = df_text2$word, freq = df_text2$freq, scale=c(3, 1), min.freq=1
 ```
 
 ## Personality Trait Raw Scores
-##### Northrop Grumman Cybersecurity Professionals' trait raw scores are displayed as density plots.
+##### Northrop Grumman Cybersecurity Professionals' trait raw scores are displayed in the light green density plots.  Control data, where available, is displayed in behind and in red.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2a %>% filter(Dimension != "SelfEfficacy", CyberPro=="Yes") %>% 
+df2a2 %>% filter(Dimension != "SelfEfficacy", CyberPro %in% c("Yes", "Control")) %>% 
   ggplot() +
-  geom_density(aes(x=Score), fill="lightgreen") +
+  geom_density(aes(x=Score, fill=CyberPro)) +
   facet_wrap(Dimension~., ncol=4) + geom_vline(aes(xintercept=.50)) +
   xlim (0,1) +
-  xlab ("Raw Score Normalized")
+  xlab ("Raw Score Normalized") +
+  theme(legend.title= element_text(color="white", size=0), legend.position = "blank") +
+  scale_fill_manual(values=c("red", "lightgreen", "darkgray"))
 
 ```
 
@@ -362,7 +372,7 @@ dfcluster3a %>% ungroup() %>% filter(cluster_sd=="High") %>%
 #####  The largest cluster, *Cluster 2* (`r 100*round(44/102,2)`%), generally reports high scores across all the dimensions and appears to resemble "Problem Solvers" and "Fascinated" personality profiles.  
 ##### *Cluster 1* (`r 100*round(28/102,2)`%) and *Cluster 3* (`r 100*round(30/102,2)`%) , consists of respondents with lower scores on many dimensions.  Cluster 1 may best resemble "Avoiders" and and Cluster 3 "Empathizers".
 
-##### Read a description of Problem Solvers, Fascinated, Avoiders, and Empathizers on pages 13-14 of the following article:
+##### Read a description of Problem Solvers, Fascinated, Avoiders, and Empathizers on pages 14 of the following article:
 ###### https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf
 
 ## Correlation Analysis of Personality Dimensions
