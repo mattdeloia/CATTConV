@@ -44,7 +44,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## Personality Trait Raw Scores
 
-##### Northrop Grumman Cybersecurity Professionals’ trait raw scores are displayed in the light green density plots. Control data, where available, is displayed in behind and in red.
+##### Northrop Grumman Cybersecurity Professionals’ trait raw scores are displayed in the light green density plots. Control data, where available, is displayed behind and in red.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
