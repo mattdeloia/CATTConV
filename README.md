@@ -12,9 +12,9 @@ Northrop Grumman CATTConV Survey Results
     workers
   - Verify factor analysis for 17 personality measures (i.e. degree
     individual questions are measuring the intended personality trait)
-  - Identify potential components (personality traits) for a predictive
-    model of latent talent for cybersecurity work roles
-  - Refine on the personality questionnaire
+  - Identify potential components to a predictive model of latent talent
+    for cybersecurity work roles
+  - Refine the personality questionnaire
 
 ##### Results and analysis from this data collection will also assist Northrop Grumman Project Work in support of Army Research and the Army Cyber Proponent.
 
