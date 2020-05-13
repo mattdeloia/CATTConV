@@ -16,7 +16,7 @@ Northrop Grumman CATTConV Survey Results
     for cybersecurity work roles
   - Refine the personality questionnaire
 
-##### Results and analysis from this data collection will also assist Northrop Grumman Project Work in support of Army Research and the Army Cyber Proponent.
+##### Results and analysis from this data collection will assist Northrop Grumman Project Work in support of the Army Research Institute and the Army’s Cyber Proponent.
 
 ## Education Column Plot
 
@@ -44,7 +44,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## Personality Trait Raw Scores
 
-##### Northrop Grumman Cybersecurity Professionals’ trait raw scores are displayed as density plots.
+##### Northrop Grumman Cybersecurity Professionals’ trait raw scores are displayed in the light green density plots. Control data, where available, is displayed in behind and in red.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
@@ -95,7 +95,7 @@ Northrop Grumman CATTConV Survey Results
 
 ##### *Cluster 1* (27%) and *Cluster 3* (29%) , consists of respondents with lower scores on many dimensions. Cluster 1 may best resemble “Avoiders” and and Cluster 3 “Empathizers”.
 
-##### Read a description of Problem Solvers, Fascinated, Avoiders, and Empathizers on pages 13-14 of the following article:
+##### Read a description of Problem Solvers, Fascinated, Avoiders, and Empathizers on pages 14 of the following article:
 
 ###### <https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf>
 
