@@ -33,7 +33,7 @@ df<- df %>% mutate("ID"=rownames(df))
 dfx$ID <- as.character(dfx$ID)
 
 #Reverse Scores for select columnn
-columnsToReverse <-  c('Skepticism13', 'Skepticism14', 'Skepticism15', 'Skepticism16','Skepticism17', 'Skepticism21', 'Skepticism22', 'Skepticism24', 'Curiosity11','Curiosity12','Curiosity13','Curiosity14', 'Curiosity15', 'NeedCognition3','NeedCognition4', 'NeedCognition5', 'NeedCognition7', 'NeedCognition9', 'NeedCognition12', 'NeedCognition16', 'NeedCognition17', 'SelfRegulation6', 'SelfRegulation9', 'SelfRegulation13', 'SelfRegulation17', 'SelfRegulation23', 'NonConformity2', 'NonConformity4', 'NonConformity5', 'NonConformity7', 'NonConformity9', 'Adaptability2', 'Adaptability5', 'Adaptability6','Adaptability7','Adaptability8', 'Grit1', 'Grit3', 'Grit5', 'Grit6')
+columnsToReverse <-  c('Skepticism13', 'Skepticism14', 'Skepticism15', 'Skepticism16','Skepticism17', 'Skepticism21', 'Skepticism22', 'Skepticism24', 'Curiosity11','Curiosity12','Curiosity13','Curiosity14', 'Curiosity15', 'NeedCognition3','NeedCognition4', 'NeedCognition5', 'NeedCognition7', 'NeedCognition8', 'NeedCognition9', 'NeedCognition12', 'NeedCognition16', 'NeedCognition17', 'SelfRegulation6', 'SelfRegulation9', 'SelfRegulation13', 'SelfRegulation17', 'SelfRegulation23', 'NonConformity2', 'NonConformity4', 'NonConformity5', 'NonConformity7', 'NonConformity9', 'Adaptability2', 'Adaptability5', 'Adaptability6','Adaptability7','Adaptability8', 'Grit1', 'Grit3', 'Grit5', 'Grit6')
 
 df[,columnsToReverse] <- 7-df[, columnsToReverse]
 
@@ -50,7 +50,7 @@ dfa <- df %>% group_by(ID) %>%
      "StressTolerance" = (sum(Curiosity11,Curiosity12,Curiosity13,Curiosity14,Curiosity15) / 30) , 
      "SocialCuriosity" = (sum(Curiosity16,Curiosity17,Curiosity18,Curiosity19,Curiosity20) / 30) , 
      "ThrillSeeking" = (sum(Curiosity21,Curiosity22,Curiosity23,Curiosity24,Curiosity25) / 30) , 
-     "NeedforCognition" = (sum(NeedCognition1,NeedCognition2,NeedCognition3,NeedCognition4,NeedCognition5,NeedCognition6,NeedCognition7,NeedCognition9,NeedCognition10,NeedCognition11,NeedCognition12,NeedCognition13,NeedCognition14,NeedCognition15,NeedCognition16,NeedCognition17,NeedCognition18) / 102) , # Removed NeedCognition8,
+     "NeedforCognition" = (sum(NeedCognition1,NeedCognition2,NeedCognition3,NeedCognition4,NeedCognition5,NeedCognition6,NeedCognition7,NeedCognition8,NeedCognition9,NeedCognition10,NeedCognition11,NeedCognition12,NeedCognition13,NeedCognition14,NeedCognition15,NeedCognition16,NeedCognition17,NeedCognition18) / 108) , 
      "Locomotion" = (sum(SelfRegulation1,SelfRegulation2,SelfRegulation3,SelfRegulation4,SelfRegulation5,SelfRegulation7,SelfRegulation8,SelfRegulation10,SelfRegulation11, SelfRegulation12) / 60) , #Removed SelfRegulation6, SelfRegulation9
      "Assessment" = (sum(SelfRegulation14,SelfRegulation15,SelfRegulation16,SelfRegulation18,SelfRegulation19,SelfRegulation20,SelfRegulation21,SelfRegulation22,SelfRegulation24) / 54) ,   #Removed   `SelfRegulation13`, SelfRegulation17,SelfRegulation23
      "NonConformity"= (sum(NonConformity2,NonConformity3,NonConformity4,NonConformity5,NonConformity7,NonConformity9,NonConformity10) / 42) , # Removed NonConformity1, NonConformity6, NonConformity8,
@@ -146,18 +146,16 @@ df_hobby2<-df_hobby %>% separate(Hobbies, c("Hobbies1", "Hobbies2", "Hobbies3", 
 #K means clustering
 set.seed(100)
 
-dfclustera <- dfa %>% select (ID,SearchforKnowledge:Grit)
+dfclustera <- dfa %>% select (ID,SearchforKnowledge:Grit) 
 dfclustera<- data.frame(dfclustera, row.names=1)
 myclustersa <- kmeans(dfclustera, centers = 3, nstart = 25)
 dfclustera <- data.frame(dfclustera) %>% cbind(myclustersa$cluster)
 dfclustera <- dplyr::rename(dfclustera, cluster = `myclustersa$cluster`) 
 
+#hclust(dfclustera, method="complete", members = NULL)
+#hclusters<- hclust((dist(dfclustera)))
+#hclusters %>% ggdendrogram(rotate=TRUE, theme_dendro = TRUE, size=4) 
 
-dfclusterb <- dfa %>% select (ID,JoyousExploration:ThrillSeeking)
-dfclusterb<- data.frame(dfclusterb, row.names=1)
-myclustersb <- kmeans(dfclusterb, centers = 4, nstart = 25)
-dfclusterb <- data.frame(dfclusterb) %>% cbind(myclustersb$cluster)
-dfclusterb <- dplyr::rename(dfclusterb, cluster = `myclustersb$cluster`) 
 ```
 
 #### `r n_CyberPro$n` Northrop Grumman Cybersecurity Professionals and `r n_Not_CyberPro$n` other Northrop Grumman Professionals (ex. Program Managers, Systems Engineers) participated in this data collection.
@@ -244,24 +242,25 @@ wordcloud(words = df_text2$word, freq = df_text2$freq, scale=c(3, 1), min.freq=1
 ```
 
 ## Personality Trait Raw Scores
-##### Northrop Grumman Cybersecurity Professionals' trait raw scores are displayed in the light green density plots.  Control data, where available, is displayed in behind and in red.
+##### Northrop Grumman Cybersecurity Professionals' trait raw scores are displayed in the light green density plots.  Northrop Grumman Professionals who did not specify a cybersecuirty role are displayed beyind in the light blue density plots.
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-df2a2 %>% filter(Dimension != "SelfEfficacy", CyberPro %in% c("Yes", "Control")) %>% 
+```{r echo=FALSE, fig.height=6, message=FALSE, warning=FALSE}
+df2a2$CyberPro <- factor(df2a2$CyberPro, levels=c("Control", "No", "Yes")) 
+df2a2 %>% filter(Dimension != "SelfEfficacy", CyberPro %in% c("Yes", "No")) %>% 
   ggplot() +
   geom_density(aes(x=Score, fill=CyberPro)) +
-  facet_wrap(Dimension~., ncol=4) + geom_vline(aes(xintercept=.50)) +
+  facet_wrap(Dimension~., ncol=3) + geom_vline(aes(xintercept=.50)) +
   xlim (0,1) +
   xlab ("Raw Score Normalized") +
   theme(legend.title= element_text(color="white", size=0), legend.position = "blank") +
-  scale_fill_manual(values=c("red", "lightgreen", "darkgray"))
+  scale_fill_manual(values=c(  "skyblue", "lightgreen"))
 
 ```
 
 ##### The description of each personality dimension is at the bottom of this page.  *NonConformity* appears to be least important in this sample and has limited variability around the center of this scale. 
 
 ## Personality Traits and Experience Correlations
-##### Data analysis determined several moderate correlations (0.3 - 0.5) between behavioral traits and years of experience.
+##### Data analysis determined several moderate correlations (0.3 - 0.5) between personality traits and years of experience suggesting select traits may change or adapt with longevity in a career.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 dfc <- dfa %>% 
@@ -321,7 +320,7 @@ Correlation2<- Correlation2 %>% filter(Category=="SelfEfficacy") %>% gather(Sear
 EfficacyCorrelation <- Correlation %>% left_join(Correlation2) %>% gather(NG_CyberSecurity:NG_Other, key=Group, value=Score) %>% mutate(CorrStrength=if_else(Score>.45, "Strong", if_else(Score>.25, "Moderate", if_else(Score>.1, "Weak", "None"))))
 EfficacyCorrelation$CorrStrength <-factor(EfficacyCorrelation$CorrStrength, levels = c("Strong", "Moderate", "Weak", "None"))
 
-EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>% 
+EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.3) %>% 
      mutate(Category = fct_reorder(Category, Score, .fun='median'))%>% 
      ggplot(aes(x=Category, y=Score, fill=CorrStrength)) + 
      geom_col() + 
@@ -331,57 +330,68 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.2) %>%
      coord_flip() + facet_grid(.~Group) + xlab("")
 ```
 
-##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
-##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest
+##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest.
+##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest.
 
 ## K Means Clustering (All Personality Dimensions)
-##### Three personality clusters resulted from the respondent data.  Highlighted in green are personality dimensions with greatest variability that serve as the defining features of the cluster. 
+##### Three personality profiles (clusters) were developed from the respondent data.  Highlighted in green are traits with a relatively high cluster average.  In blue are traits with a relatively low cluster average. 
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfcluster2a <- dfclustera %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)
 
 dfcluster2a$cluster<-as.factor(dfcluster2a$cluster)
 
-dfcluster3a<-dfcluster2a %>% group_by(Category, cluster) %>% summarise(Score=mean(Score))
+dfcluster2b <- dfcluster2a %>% group_by(Category) %>% summarise(sd=sd(Score), mean=mean(Score))
+
+dfcluster2c <- dfcluster2a %>% left_join(dfcluster2b)
+
+dfcluster3a<-dfcluster2c %>% group_by(Category, cluster, sd, mean) %>% summarise(Score=mean(Score)) %>% mutate(ClusterAve = if_else(Score<=(mean-.5*sd), "Low", if_else(Score>=(mean+.5*sd), "High", "Average")))
+
 
 dfcluster3a$cluster<- paste("Cluster", dfcluster3a$cluster) 
 
-df_sd <- dfcluster3a %>% group_by(Category) %>% summarise(sd=sd(Score), mean=mean(Score)) %>% mutate(cluster_sd=if_else(sd>.075, "High", "Low"))
+df_sd <- dfcluster3a %>% group_by(Category) %>% summarise(clustersd=sd(Score)) %>% arrange(clustersd) 
 
-dfcluster3a <- dfcluster3a %>% left_join(df_sd) %>% mutate(score=if_else((mean-Score)>.05, "Deviation", "Normal"))
+dfcluster3a <- dfcluster3a %>% left_join(df_sd) %>% mutate(score=if_else(abs(mean-Score)>.05, "Deviation", "Normal"))
 
-dfcluster3a$cluster_sd <- factor(dfcluster3a$cluster_sd) 
+dfcluster3a$clustersd <- factor(dfcluster3a$clustersd) 
 
 #myclustersa$cluster
 #myclustersa$centers
 #myclustersa$size
 #fviz_cluster(myclusters, data = dfcluster)
 
-dfcluster3a %>% ungroup() %>% filter(cluster_sd=="High") %>% 
+dfcluster3a$ClusterAve <- factor (dfcluster3a$ClusterAve, levels = c("Low", "Average", "High"))
+dfcluster3a %>% ungroup() %>% 
      mutate(Category = fct_reorder(Category, Score, .fun=max)) %>% 
      ggplot(aes (x=Category, y=Score, group=cluster)) + 
-     geom_col(aes(fill=score), size=2) +
-     scale_fill_manual(values = c("green", "darkgray")) +
+     geom_col(aes(fill=ClusterAve), size=2) +
+     scale_fill_manual(values = c("skyblue", "gray", "lightgreen")) +
      coord_flip() + 
      geom_hline(yintercept = .5, color="red", linetype="dashed") +
-     theme(legend.title= element_text(color="blue", size=10), legend.position = "blank") +
+     theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
     xlab("") + ylab("Cluster Average Score (Normalized)") + facet_grid(.~cluster)  
   
 ```
 
-#####  The largest cluster, *Cluster 2* (`r 100*round(44/102,2)`%), generally reports high scores across all the dimensions and appears to resemble "Problem Solvers" and "Fascinated" personality profiles.  
-##### *Cluster 1* (`r 100*round(28/102,2)`%) and *Cluster 3* (`r 100*round(30/102,2)`%) , consists of respondents with lower scores on many dimensions.  Cluster 1 may best resemble "Avoiders" and and Cluster 3 "Empathizers".
+#####  The largest cluster, *Cluster 3* (`r 100*round(43/102,2)`%), generally reports average to high scores across all the dimensions.
+##### *Cluster 1* (`r 100*round(28/103,2)`%) and *Cluster 2* (`r 100*round(31/103,2)`%) , consists of respondents with a specific combination of lower scores across several dimensions. 
 
-##### Read a description of Problem Solvers, Fascinated, Avoiders, and Empathizers on pages 14 of the following article:
-###### https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf
-
-## Correlation Analysis of Personality Dimensions
+##### Select personality traits displayed greater variation among the three clusters of Northrop Grumman professionals.  Stress Tolerance and Social Curiosity, for example, seem to play a large role in determining the cluster assignments.  Traits such as Search for Knowledge,  Questioning Mind, Locomotion, Joyous Exploration and Grit appear to have less importance in cluster assignment.  
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
-corrplot(cor(dfclustera), method="color", order="hclust", type="full", addrect=12, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
+df_sd %>% mutate(Category = fct_reorder(Category, clustersd, .fun=max)) %>% ggplot() + geom_point(aes(x=Category, y=clustersd), color="green") + geom_hline(yintercept = .05, color="red", linetype="dashed" ) +
+  coord_flip() +ylab("Standard Deviation between Clusters") + ggsave ("Cluster analysis.jpg", width=4, height = 6, units = "in")
 ```
 
-##### Correlation coefficients are displayed and shaded.  Green boxes are drawn from the results of hierarchical clustering of these personality dimensions.  For example, respondent data suggests "Search for Knowledge" and "Joyous Exploration" measure the same trait.
+## Correlation of Dimensions used in Questionnaire
+
+```{r message=FALSE, warning=FALSE,echo=FALSE}
+dfcorrplot <- dfclustera %>% select(-cluster)
+corrplot(cor(dfcorrplot), method="color", order="hclust", type="full", addrect=10, cl.lim=c(-1,1), addCoef.col="black", rect.col="green", diag = FALSE, number.font=1, number.digits = 1, number.cex = .7)
+```
+
+##### Correlation coefficients are displayed and shaded.  Green boxes are drawn from the results of hierarchical clustering of these personality dimensions.  For example, respondent data suggests "Search for Knowledge" and "Joyous Exploration" seemingly measure the same trait.
 
 ## References:
 ###### Adaptability and Conformity, International Personality Item Pool: A Scientific Collaboratory for the Development of Advanced Measures of Personality Traits and Other Individual Differences. http://ipip.ori.org/
