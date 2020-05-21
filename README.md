@@ -123,7 +123,7 @@ Northrop Grumman CATTConV Survey Results
 
   - *SearchforKnowledge*: Ability to ask questions beyond the obvious
     answer.
-  - *StressTolerance*: Ability to cope win the anxiety inherent in
+  - *StressTolerance*: Ability to cope with the anxiety inherent in
     confronting the new, unexpected, complex, mysterious, and obscure
     events.
   - *JoyousExploration*: Preference for new information and experiences,
