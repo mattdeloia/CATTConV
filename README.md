@@ -26,7 +26,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## Experience Histogram
 
-##### Northrop Grumman Cybersecurity Professionals reported, on average, 11 years of experience.
+##### Northrop Grumman Cybersecurity Professionals reported, on average, 11 years years of experience.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
@@ -44,9 +44,12 @@ Northrop Grumman CATTConV Survey Results
 
 ## Personality Trait Raw Scores
 
-##### Northrop Grumman Cybersecurity Professionals’ trait raw scores are displayed in the light green density plots. Northrop Grumman Professionals who did not specify a cybersecurity role are displayed behind in the light blue density plots.
+##### Northrop Grumman Cybersecurity Professionals’ trait raw scores are displayed in the light green density plots. Northrop Grumman Professionals who did not specify a cybersecuirty role are displayed beyind in the light blue density plots.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+    ##  female    male unknown    NA's 
+    ##     324    1008     504    1836
 
 ##### The description of each personality dimension is at the bottom of this page. *NonConformity* appears to be least important in this sample and has limited variability around the center of this scale.
 
@@ -87,7 +90,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## K Means Clustering (All Personality Dimensions)
 
-##### Three personality profiles (clusters) were developed from the respondent data. Highlighted in green are traits with a relatively high cluster average. In blue are traits with a relatively low cluster average.
+##### Three personality profiles (clusters) were developed from the respondent trait scores. Highlighted in green are traits with a relatively high cluster average. In blue are traits with a relatively low cluster average.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
@@ -95,13 +98,25 @@ Northrop Grumman CATTConV Survey Results
 
 ##### *Cluster 1* (27%) and *Cluster 2* (30%) , consists of respondents with a specific combination of lower scores across several dimensions.
 
-##### Select personality traits displayed greater variation among the three clusters of Northrop Grumman professionals. Stress Tolerance and Social Curiosity, for example, seem to play a large role in determining the cluster assignments. Traits such as Search for Knowledge, Questioning Mind, Locomotion, Joyous Exploration and Grit appear to have less importance in cluster assignment.
-
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+## Latent Profile Analysis (All Item level data)
+
+##### Two personality profiles (clusters) were developed using latent profile analysis (LPA) using the mclust pacakge in R. A comparison of probabilisitc models demonstrated that 2 clusters best fit the data. . Highlighted in green are traits with a relatively high cluster average. In blue are traits with a relatively low cluster average.
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+##### The largest cluster, *Cluster 1* (57%), reports average to high scores across all the dimensions.
+
+##### *Cluster 2* (43%) consists of respondents with a specific combination of lower scores across several dimensions.
+
+##### Select personality traits displayed greater variation among two clusters of Northrop Grumman professionals. Stress Tolerance and Need for Cognition, for example, seem to play a large role in determining the cluster assignments. Traits such as Assessment, Social Curiosity, Deprivation Sensitivity, Thrill Seeking, Non-Conformity and Suspension of Judgement appear to have less impact in cluster assignment.
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ## Correlation of Dimensions used in Questionnaire
 
-![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ##### Correlation coefficients are displayed and shaded. Green boxes are drawn from the results of hierarchical clustering of these personality dimensions. For example, respondent data suggests “Search for Knowledge” and “Joyous Exploration” seemingly measure the same trait.
 
@@ -123,7 +138,7 @@ Northrop Grumman CATTConV Survey Results
 
   - *SearchforKnowledge*: Ability to ask questions beyond the obvious
     answer.
-  - *StressTolerance*: Ability to cope with the anxiety inherent in
+  - *StressTolerance*: Ability to cope win the anxiety inherent in
     confronting the new, unexpected, complex, mysterious, and obscure
     events.
   - *JoyousExploration*: Preference for new information and experiences,
