@@ -1,7 +1,7 @@
 Northrop Grumman CATTConV Survey Results
 ================
 
-#### 63 Northrop Grumman Cybersecurity Professionals and 39 other Northrop Grumman Professionals (ex. Program Managers, Systems Engineers) participated in this data collection.
+#### 62 Northrop Grumman Cybersecurity Professionals and 40 other Northrop Grumman Professionals (ex. Program Managers, Systems Engineers) participated in this data collection.
 
 ##### Research aims:
 
@@ -26,7 +26,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## Experience Histogram
 
-##### Northrop Grumman Cybersecurity Professionals reported, on average, 11 years years of experience.
+##### Northrop Grumman Cybersecurity Professionals reported, on average, 11 years of experience.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
@@ -44,7 +44,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## Personality Trait Raw Scores
 
-##### Northrop Grumman Cybersecurity Professionals’ trait raw scores are displayed in the light green density plots. Control data, where available, is displayed behind and in red.
+##### Northrop Grumman Cybersecurity Professionals’ trait raw scores are displayed in the light green density plots. Northrop Grumman Professionals who did not specify a cybersecurity role are displayed behind in the light blue density plots.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
@@ -52,7 +52,7 @@ Northrop Grumman CATTConV Survey Results
 
 ## Personality Traits and Experience Correlations
 
-##### Data analysis determined several moderate correlations (0.3 - 0.5) between behavioral traits and years of experience.
+##### Data analysis determined several moderate correlations (0.3 - 0.5) between personality traits and years of experience suggesting select traits may change or adapt with longevity in a career.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
@@ -81,29 +81,29 @@ Northrop Grumman CATTConV Survey Results
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest
+##### Cybersecurity Professionals: Self-Confidence and Need for Cognition correlated highest.
 
-##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest
+##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest.
 
 ## K Means Clustering (All Personality Dimensions)
 
-##### Three personality clusters resulted from the respondent data. Highlighted in green are personality dimensions with greatest variability that serve as the defining features of the cluster.
+##### Three personality profiles (clusters) were developed from the respondent data. Highlighted in green are traits with a relatively high cluster average. In blue are traits with a relatively low cluster average.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-##### The largest cluster, *Cluster 2* (43%), generally reports high scores across all the dimensions and appears to resemble “Problem Solvers” and “Fascinated” personality profiles.
+##### The largest cluster, *Cluster 3* (42%), generally reports average to high scores across all the dimensions.
 
-##### *Cluster 1* (27%) and *Cluster 3* (29%) , consists of respondents with lower scores on many dimensions. Cluster 1 may best resemble “Avoiders” and and Cluster 3 “Empathizers”.
+##### *Cluster 1* (27%) and *Cluster 2* (30%) , consists of respondents with a specific combination of lower scores across several dimensions.
 
-##### Read a description of Problem Solvers, Fascinated, Avoiders, and Empathizers on pages 14 of the following article:
-
-###### <https://www.researchgate.net/profile/Todd_Kashdan/publication/321471978_The_Five-Dimensional_Curiosity_Scale_Capturing_the_bandwidth_of_curiosity_and_identifying_four_unique_subgroups_of_curious_people/links/5ae34644aca272fdaf904f6f/The-Five-Dimensional-Curiosity-Scale-Capturing-the-bandwidth-of-curiosity-and-identifying-four-unique-subgroups-of-curious-people.pdf>
-
-## Correlation Analysis of Personality Dimensions
+##### Select personality traits displayed greater variation among the three clusters of Northrop Grumman professionals. Stress Tolerance and Social Curiosity, for example, seem to play a large role in determining the cluster assignments. Traits such as Search for Knowledge, Questioning Mind, Locomotion, Joyous Exploration and Grit appear to have less importance in cluster assignment.
 
 ![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-##### Correlation coefficients are displayed and shaded. Green boxes are drawn from the results of hierarchical clustering of these personality dimensions. For example, respondent data suggests “Search for Knowledge” and “Joyous Exploration” measure the same trait.
+## Correlation of Dimensions used in Questionnaire
+
+![](CATTCon_Personality_Dashboard_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+##### Correlation coefficients are displayed and shaded. Green boxes are drawn from the results of hierarchical clustering of these personality dimensions. For example, respondent data suggests “Search for Knowledge” and “Joyous Exploration” seemingly measure the same trait.
 
 ## References:
 
@@ -123,7 +123,7 @@ Northrop Grumman CATTConV Survey Results
 
   - *SearchforKnowledge*: Ability to ask questions beyond the obvious
     answer.
-  - *StressTolerance*: Ability to cope win the anxiety inherent in
+  - *StressTolerance*: Ability to cope with the anxiety inherent in
     confronting the new, unexpected, complex, mysterious, and obscure
     events.
   - *JoyousExploration*: Preference for new information and experiences,
