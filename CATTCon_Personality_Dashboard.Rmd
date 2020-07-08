@@ -22,7 +22,9 @@ library(data.table)
 library(ggdendro)
 library(factoextra)
 library(randomForest)
-
+library(careless)
+library(psych)
+library(mclust)
 
 df<- read_excel("CATTConSurveyResults.xls")
 dfx <- read_excel("CATTConSurveyResults_ControlData.xlsx")
@@ -152,9 +154,24 @@ myclustersa <- kmeans(dfclustera, centers = 3, nstart = 25)
 dfclustera <- data.frame(dfclustera) %>% cbind(myclustersa$cluster)
 dfclustera <- dplyr::rename(dfclustera, cluster = `myclustersa$cluster`) 
 
+#Hierarchical clustering
 #hclust(dfclustera, method="complete", members = NULL)
 #hclusters<- hclust((dist(dfclustera)))
 #hclusters %>% ggdendrogram(rotate=TRUE, theme_dendro = TRUE, size=4) 
+
+#latent profile analysis based on responses to 124 items
+lpa_test <- df %>% select(Skepticism1:SelfRegulation24, ID) %>% column_to_rownames ("ID") 
+
+clustering <- lpa_test %>%  mutate_all(list(scale))
+
+BIC <- mclustBIC(clustering)
+plot(BIC)
+summary(BIC)
+
+mod1 <- Mclust(clustering, modelNames = "VII", G = 2, x = BIC)
+
+dfclustera <- dfclustera %>% cbind(mod1$classification)
+dfclustera <- dplyr::rename(dfclustera, cluster_lpa = `mod1$classification`)
 
 ```
 
@@ -246,15 +263,17 @@ wordcloud(words = df_text2$word, freq = df_text2$freq, scale=c(3, 1), min.freq=1
 
 ```{r echo=FALSE, fig.height=6, message=FALSE, warning=FALSE}
 df2a2$CyberPro <- factor(df2a2$CyberPro, levels=c("Control", "No", "Yes")) 
-df2a2 %>% filter(Dimension != "SelfEfficacy", CyberPro %in% c("Yes", "No")) %>% 
+df2a2$Gender <- as.factor(df2a2$Gender) 
+
+df2a2 %>% filter(Dimension != "SelfEfficacy", CyberPro %in% c("Yes", "No"), Gender!="unknown") %>% 
   ggplot() +
-  geom_density(aes(x=Score, fill=CyberPro)) +
+  geom_density(aes(x=Score, fill=Gender)) +
   facet_wrap(Dimension~., ncol=3) + geom_vline(aes(xintercept=.50)) +
   xlim (0,1) +
   xlab ("Raw Score Normalized") +
-  theme(legend.title= element_text(color="white", size=0), legend.position = "blank") +
-  scale_fill_manual(values=c(  "skyblue", "lightgreen"))
-
+  theme(legend.title= element_text(color="white", size=0), legend.position = "top") +
+  scale_fill_manual(values=c(  "tomato", "lightblue", "gray")) + ggsave("Gender_DensityPlots.pdf")
+summary(df2a2$Gender)
 ```
 
 ##### The description of each personality dimension is at the bottom of this page.  *NonConformity* appears to be least important in this sample and has limited variability around the center of this scale. 
@@ -334,7 +353,7 @@ EfficacyCorrelation %>% filter (Category != "SelfEfficacy", Score>.3) %>%
 ##### Non-cybersecurity Professionals: Joyous Exploration and Stress Tolerance correlated highest.
 
 ## K Means Clustering (All Personality Dimensions)
-##### Three personality profiles (clusters) were developed from the respondent data.  Highlighted in green are traits with a relatively high cluster average.  In blue are traits with a relatively low cluster average. 
+##### Three personality profiles (clusters) were developed from the respondent trait scores.  Highlighted in green are traits with a relatively high cluster average.  In blue are traits with a relatively low cluster average. 
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 dfcluster2a <- dfclustera %>% gather(SearchforKnowledge:Grit, key=Category, value=Score)
@@ -377,13 +396,47 @@ dfcluster3a %>% ungroup() %>%
 #####  The largest cluster, *Cluster 3* (`r 100*round(43/102,2)`%), generally reports average to high scores across all the dimensions.
 ##### *Cluster 1* (`r 100*round(28/103,2)`%) and *Cluster 2* (`r 100*round(31/103,2)`%) , consists of respondents with a specific combination of lower scores across several dimensions. 
 
-##### Select personality traits displayed greater variation among the three clusters of Northrop Grumman professionals.  Stress Tolerance and Social Curiosity, for example, seem to play a large role in determining the cluster assignments.  Traits such as Search for Knowledge,  Questioning Mind, Locomotion, Joyous Exploration and Grit appear to have less importance in cluster assignment.  
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
 df_sd %>% mutate(Category = fct_reorder(Category, clustersd, .fun=max)) %>% ggplot() + geom_point(aes(x=Category, y=clustersd), color="green") + geom_hline(yintercept = .05, color="red", linetype="dashed" ) +
   coord_flip() +ylab("Standard Deviation between Clusters") + ggsave ("Cluster analysis.jpg", width=4, height = 6, units = "in")
 ```
 
+## Latent Profile Analysis (All Item level data)
+##### Two personality profiles (clusters) were developed using latent profile analysis (LPA) using the mclust pacakge in R.  A comparison of probabilisitc models demonstrated that 2 clusters best fit the data. .  Highlighted in green are traits with a relatively high cluster average.  In blue are traits with a relatively low cluster average.
+
+```{r message=FALSE, warning=FALSE,echo=FALSE}
+dfcluster4a <-dfcluster2c %>% group_by(Category, cluster_lpa, sd, mean) %>% summarise(Score=mean(Score)) %>% mutate(ClusterAve = if_else(Score<=(mean-.5*sd), "Low", if_else(Score>=(mean+.5*sd), "High", "Average")))
+
+dfcluster4a$cluster_lpa<- paste("Cluster", dfcluster4a$cluster_lpa) 
+
+dfcluster4a$ClusterAve <- factor (dfcluster4a$ClusterAve, levels = c("Low", "Average", "High"))
+
+df_sd <- dfcluster4a %>% group_by(Category) %>% summarise(clustersd=abs(diff(Score))) %>% arrange(clustersd) 
+
+dfcluster4a <- dfcluster4a %>% left_join(df_sd) 
+
+
+dfcluster4a %>% ungroup() %>% 
+     mutate(Category = fct_reorder(Category, clustersd, .fun=max)) %>% 
+     ggplot(aes (x=Category, y=Score, group=cluster_lpa)) + 
+     geom_col(aes(fill=ClusterAve), size=2) +
+     scale_fill_manual(values = c("skyblue", "gray", "lightgreen")) +
+     coord_flip() + 
+     geom_hline(yintercept = .5, color="red", linetype="dashed") +
+     theme(legend.title= element_text(color="blue", size=10), legend.position = "top") +
+    xlab("") + ylab("Cluster Average Score") + facet_grid(.~cluster_lpa)  
+```
+
+#####  The largest cluster, *Cluster 1* (`r 100*round(58/102,2)`%), reports average to high scores across all the dimensions.
+##### *Cluster 2* (`r 100*round(44/103,2)`%) consists of respondents with a specific combination of lower scores across several dimensions. 
+##### Select personality traits displayed greater variation among two clusters of Northrop Grumman professionals.  Stress Tolerance and Need for Cognition, for example, seem to play a large role in determining the cluster assignments.  Traits such as Assessment, Social Curiosity, Deprivation Sensitivity, Thrill Seeking, Non-Conformity and Suspension of Judgement appear to have less impact in cluster assignment.
+
+```{r message=FALSE, warning=FALSE,echo=FALSE}
+df_sd %>% mutate(Category = fct_reorder(Category, clustersd, .fun=max)) %>% ggplot() + geom_point(aes(x=Category, y=clustersd), color="green") + geom_hline(yintercept = .05, color="red", linetype="dashed" ) +
+  coord_flip() +ylab("Difference between Clusters") + ggsave ("Cluster analysis_LPA.jpg", width=4, height = 6, units = "in")
+```
+  
 ## Correlation of Dimensions used in Questionnaire
 
 ```{r message=FALSE, warning=FALSE,echo=FALSE}
@@ -419,3 +472,9 @@ corrplot(cor(dfcorrplot), method="color", order="hclust", type="full", addrect=1
 * *Assessment*: focus on self-evaluation and "doing the right thing."
 * *ThrillSeeking*: On the hunt for varied, novel, complex, and intense experiences and ready to risk physical, social, and financial safety.
 * *Non-Conformity*: refusal to conform to prevailing rules or practices.
+
+
+
+
+
+
