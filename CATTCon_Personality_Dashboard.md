@@ -134,6 +134,8 @@ Northrop Grumman CATTConV Survey Results
 
 ###### Kruglanski, A. W., Thompson, E. P., Higgins, E. T., Atash, M. N., Pierro, A., Shah, J. Y., Spiegel, S. (2000, Nov). To “do the right thing” or to “just do it”: Locomotion and assessment as distinct self-regulatory imperatives. *Journal of Personality and Social Psychology*, 79(5), 793-815.
 
+######  Scrucca L., Fop M., Murphy T. B. and Raftery A. E. (2016) mclust 5:  clustering, classification and density estimation using Gaussian finite mixture models The R Journal 8/1, pp. 289-317.  
+
 #### Definitions of Personality Dimensions
 
   - *SearchforKnowledge*: Ability to ask questions beyond the obvious
